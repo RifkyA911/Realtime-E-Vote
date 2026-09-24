@@ -49,6 +49,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'dist';
+$route['default_controller'] = 'dashboard';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+// Auth & Language Routes
+$route['auth/login'] = 'auth/login';
+$route['auth/authenticate'] = 'auth/authenticate';
+$route['auth/tap_card'] = 'auth/tap_card';
+$route['auth/logout'] = 'auth/logout';
+$route['lang/switch/(:any)'] = 'lang/switch_lang/$1';
+
+// Documentation Route
+$route['docs'] = 'docs/index';
+
+// E-Vote Routes
+$route['dashboard'] = 'dashboard/index';
+$route['dashboard/live_stats'] = 'dashboard/get_live_stats';
+$route['dashboard/print_rekap'] = 'dashboard/print_rekap';
+
+$route['candidate'] = 'candidate/index';
+$route['candidate/create'] = 'candidate/create';
+$route['candidate/store'] = 'candidate/store';
+$route['candidate/edit/(:num)'] = 'candidate/edit/$1';
+$route['candidate/update/(:num)'] = 'candidate/update/$1';
+$route['candidate/delete/(:num)'] = 'candidate/delete/$1';
+$route['candidate/detail/(:num)'] = 'candidate/detail/$1';
+
+$route['voter'] = 'voter/index';
+$route['voter/create'] = 'voter/create';
+$route['voter/store'] = 'voter/store';
+$route['voter/edit/(:num)'] = 'voter/edit/$1';
+$route['voter/update/(:num)'] = 'voter/update/$1';
+$route['voter/delete/(:num)'] = 'voter/delete/$1';
+$route['voter/reset_status/(:num)'] = 'voter/reset_status/$1';
+$route['voter/reset_all'] = 'voter/reset_all';
+
+$route['vote'] = 'vote/index';
+$route['vote/cast'] = 'vote/cast';
+
+$route['migrate'] = 'migrate/index';
+$route['migrate/seed'] = 'migrate/seed';
+$route['migrate/reset'] = 'migrate/reset';
