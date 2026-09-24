@@ -199,23 +199,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <a href="#">View All <i class="fas fa-chevron-right"></i></a>
               </div>
             </div>
+          <!-- Language Switcher Dropdown -->
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg" title="Pilih Bahasa / Language">
+              <i class="fas fa-globe"></i>
+              <span class="d-none d-md-inline-block font-weight-bold ml-1 text-uppercase">
+                <?php echo (current_lang() === 'en') ? 'EN' : 'ID'; ?>
+              </span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <div class="dropdown-title"><?php echo __t('language', 'Bahasa'); ?></div>
+              <a href="<?php echo base_url('lang/switch/id'); ?>" class="dropdown-item has-icon <?php echo (current_lang() !== 'en') ? 'font-weight-bold text-primary' : ''; ?>">
+                <span class="mr-2">🇮🇩</span> Bahasa Indonesia <?php echo (current_lang() !== 'en') ? '<i class="fas fa-check float-right mt-1"></i>' : ''; ?>
+              </a>
+              <a href="<?php echo base_url('lang/switch/en'); ?>" class="dropdown-item has-icon <?php echo (current_lang() === 'en') ? 'font-weight-bold text-primary' : ''; ?>">
+                <span class="mr-2">🇬🇧</span> English <?php echo (current_lang() === 'en') ? '<i class="fas fa-check float-right mt-1"></i>' : ''; ?>
+              </a>
+            </div>
           </li>
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
             <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-            <div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div></a>
+            <div class="d-sm-none d-lg-inline-block">
+              <?php echo $this->session->userdata('name') ?: 'Pengguna'; ?>
+              <span class="badge badge-sm badge-light ml-1 text-uppercase text-dark font-weight-bold" style="font-size: 10px;">
+                <?php echo $this->session->userdata('role') ?: 'Guest'; ?>
+              </span>
+            </div></a>
             <div class="dropdown-menu dropdown-menu-right">
-              <div class="dropdown-title">Logged in 5 min ago</div>
-              <a href="<?php echo base_url(); ?>dist/features_profile" class="dropdown-item has-icon">
-                <i class="far fa-user"></i> Profile
+              <div class="dropdown-title">Masuk sbg: <?php echo ucfirst($this->session->userdata('role') ?: 'User'); ?></div>
+              <a href="<?php echo base_url(); ?>dashboard" class="dropdown-item has-icon">
+                <i class="fas fa-chart-pie"></i> Real Count
               </a>
-              <a href="<?php echo base_url(); ?>dist/features_activities" class="dropdown-item has-icon">
-                <i class="fas fa-bolt"></i> Activities
+              <a href="<?php echo base_url(); ?>vote" class="dropdown-item has-icon">
+                <i class="fas fa-person-booth"></i> Bilik Suara
               </a>
-              <a href="<?php echo base_url(); ?>dist/features_settings" class="dropdown-item has-icon">
-                <i class="fas fa-cog"></i> Settings
+              <a href="<?php echo base_url(); ?>candidate" class="dropdown-item has-icon">
+                <i class="fas fa-users"></i> Data Paslon
               </a>
+              <?php if ($this->session->userdata('role') === 'admin'): ?>
+                <a href="<?php echo base_url(); ?>voter" class="dropdown-item has-icon">
+                  <i class="fas fa-address-book"></i> Data DPT
+                </a>
+              <?php endif; ?>
               <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item has-icon text-danger">
+              <a href="<?php echo base_url(); ?>auth/logout" class="dropdown-item has-icon text-danger" onclick="return confirm('Apakah Anda yakin ingin logout?');">
                 <i class="fas fa-sign-out-alt"></i> Logout
               </a>
             </div>
