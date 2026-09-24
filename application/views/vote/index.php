@@ -208,34 +208,34 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                       </div>
 
                       <h4 class="font-weight-bold text-dark mb-1" style="font-size: 19px;"><?php echo $c->chairman_name; ?></h4>
-                      <p class="text-primary font-weight-bold mb-2">Calon Ketua</p>
+                      <p class="text-primary font-weight-bold mb-2"><?php echo __t('chairman', 'Calon Ketua'); ?></p>
 
                       <div class="bg-light py-2 px-3 rounded d-inline-block mb-3 border">
                         <span class="font-weight-bold text-dark">&amp; <?php echo $c->vice_chairman_name; ?></span>
-                        <div class="small text-muted">Calon Wakil Ketua</div>
+                        <div class="small text-muted"><?php echo __t('vice_chairman', 'Calon Wakil Ketua'); ?></div>
                       </div>
 
                       <div class="text-left mt-2 mb-3 bg-whitesmoke p-3 rounded" style="font-size: 13px;">
-                        <strong class="text-muted text-uppercase d-block mb-1">Visi Singkat:</strong>
+                        <strong class="text-muted text-uppercase d-block mb-1"><?php echo __t('vision', 'Visi'); ?>:</strong>
                         <div class="text-muted" style="height: 48px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
                           <?php echo htmlspecialchars($c->vision); ?>
                         </div>
                       </div>
 
                       <button type="button" class="btn btn-outline-info btn-sm btn-block mb-3" data-toggle="modal" data-target="#modalDetail<?php echo $c->id; ?>">
-                        <i class="fas fa-info-circle mr-1"></i> Baca Visi &amp; Misi Lengkap
+                        <i class="fas fa-info-circle mr-1"></i> <?php echo __t('vision_mission', 'Visi & Misi Lengkap'); ?>
                       </button>
 
                       <!-- Big Coblos Button -->
                       <?php if ($already_voted): ?>
                         <button type="button" class="btn btn-lg btn-block btn-secondary disabled shadow-none" disabled style="padding: 12px;">
-                          <i class="fas fa-check-circle mr-1"></i> Sudah Memilih
+                          <i class="fas fa-check-circle mr-1"></i> <?php echo __t('has_voted', 'Sudah Memilih'); ?>
                         </button>
                       <?php else: ?>
                         <button type="button" class="btn btn-lg btn-block font-weight-bold text-white shadow" 
-                                style="background-color: <?php echo $c->color ?: '#6777ef'; ?>; border: none; padding: 12px;" 
-                                onclick="promptVote(<?php echo $c->id; ?>, <?php echo $c->candidate_number; ?>, '<?php echo addslashes($c->chairman_name . ' & ' . $c->vice_chairman_name); ?>')">
-                          <i class="fas fa-stamp mr-1"></i> COBLOS PASLON 0<?php echo $c->candidate_number; ?>
+                                 style="background-color: <?php echo $c->color ?: '#6777ef'; ?>; border: none; padding: 12px;" 
+                                 onclick="promptVote(<?php echo $c->id; ?>, <?php echo $c->candidate_number; ?>, '<?php echo addslashes($c->chairman_name . ' & ' . $c->vice_chairman_name); ?>')">
+                          <i class="fas fa-stamp mr-1"></i> <?php echo __t('btn_vote_this', 'COBLOS PASLON'); ?> 0<?php echo $c->candidate_number; ?>
                         </button>
                       <?php endif; ?>
                     </div>

@@ -63,21 +63,18 @@ $this->load->view('dist/_partials/header', array('title' => $title));
       <div class="container mt-4 mb-5">
         <div class="row">
           <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <a href="<?php echo base_url('docs'); ?>" target="_blank" class="small text-muted font-weight-600">
-                <i class="fas fa-book mr-1"></i> <?php echo __t('menu_docs', 'Dokumentasi Sistem'); ?>
-              </a>
+            <div class="d-flex justify-content-end align-items-center mb-3">
               <!-- Language Switcher -->
               <div class="dropdown">
-                <a href="#" data-toggle="dropdown" class="badge badge-light border text-dark font-weight-bold dropdown-toggle py-2 px-3">
+                <a href="#" data-toggle="dropdown" class="badge badge-light border text-dark font-weight-bold dropdown-toggle py-2 px-3 shadow-sm">
                   <i class="fas fa-globe mr-1"></i> <?php echo (current_lang() === 'en') ? 'English (EN)' : 'Indonesia (ID)'; ?>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                   <a href="<?php echo base_url('lang/switch/id'); ?>" class="dropdown-item small <?php echo (current_lang() !== 'en') ? 'font-weight-bold text-primary' : ''; ?>">
-                    🇮🇩 Bahasa Indonesia <?php echo (current_lang() !== 'en') ? '✓' : ''; ?>
+                    <span class="mr-2">🇮🇩</span> Bahasa Indonesia <?php echo (current_lang() !== 'en') ? '✓' : ''; ?>
                   </a>
                   <a href="<?php echo base_url('lang/switch/en'); ?>" class="dropdown-item small <?php echo (current_lang() === 'en') ? 'font-weight-bold text-primary' : ''; ?>">
-                    🇬🇧 English <?php echo (current_lang() === 'en') ? '✓' : ''; ?>
+                    <span class="mr-2">🇬🇧</span> English <?php echo (current_lang() === 'en') ? '✓' : ''; ?>
                   </a>
                 </div>
               </div>
@@ -123,12 +120,12 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                 <ul class="nav nav-pills nav-fill w-100" id="loginTabs" role="tablist">
                   <li class="nav-item">
                     <a class="nav-link active font-weight-bold py-2" id="rfid-tab" data-toggle="tab" href="#tab-rfid" role="tab" aria-selected="true">
-                      <i class="fas fa-id-card mr-1"></i> Tap ID Card / RFID
+                      <i class="fas fa-id-card mr-1"></i> <?php echo __t('tab_tap_card', 'Tap ID Card / RFID'); ?>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link font-weight-bold py-2" id="password-tab" data-toggle="tab" href="#tab-password" role="tab" aria-selected="false">
-                      <i class="fas fa-key mr-1"></i> Username &amp; Password
+                      <i class="fas fa-key mr-1"></i> <?php echo __t('tab_password', 'Username & Password'); ?>
                     </a>
                   </li>
                 </ul>
@@ -144,7 +141,7 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                     
                     <div class="d-flex justify-content-between align-items-center mb-3">
                       <span class="badge badge-success px-3 py-1 font-weight-bold">
-                        <i class="fas fa-circle text-white mr-1" style="font-size: 8px;"></i> Reader Siap Mendeteksi
+                        <i class="fas fa-circle text-white mr-1" style="font-size: 8px;"></i> <?php echo __t('scanner_status_ready', 'Reader Siap Mendeteksi'); ?>
                       </span>
                       <small class="text-muted"><i class="fas fa-keyboard mr-1"></i> Keyboard Wedge / NFC Active</small>
                     </div>
@@ -154,9 +151,9 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                       <div class="scanner-icon-circle" id="scannerIcon">
                         <i class="fas fa-id-card"></i>
                       </div>
-                      <h5 class="text-dark font-weight-bold mb-1" id="scannerStatusTitle">Tempelkan Kartu ID / RFID Anda</h5>
+                      <h5 class="text-dark font-weight-bold mb-1" id="scannerStatusTitle"><?php echo __t('scanner_status_ready', 'Tempelkan Kartu ID Anda ke Scanner'); ?></h5>
                       <p class="text-muted small mb-3" id="scannerStatusDesc">
-                        Dekatkan kartu pemilih ke reader USB / NFC untuk langsung masuk ke Bilik Suara tanpa password.
+                        <?php echo __t('scanner_desc', 'Dekatkan kartu RFID / NFC pada reader atau gunakan sensor NFC ponsel.'); ?>
                       </p>
 
                       <!-- Input Field for Scanner (Supports auto-entry from USB RFID reader) -->
@@ -236,28 +233,28 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                     
                     <?php echo form_open('auth/authenticate', array('class' => 'needs-validation')); ?>
                       <div class="form-group">
-                        <label for="username">Username / Kode Pemilih (NIM/NIS) <span class="text-danger">*</span></label>
+                        <label for="username"><?php echo __t('username', 'Username / Kode Pemilih (NIM/NIS)'); ?> <span class="text-danger">*</span></label>
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                           </div>
-                          <input id="username" type="text" class="form-control" name="username" placeholder="Masukkan username admin atau kode pemilih" value="<?php echo set_value('username'); ?>" required>
+                          <input id="username" type="text" class="form-control" name="username" placeholder="<?php echo __t('username', 'Masukkan username admin atau kode pemilih'); ?>" value="<?php echo set_value('username'); ?>" required>
                         </div>
                       </div>
 
                       <div class="form-group">
-                        <label for="password" class="control-label">Password <span class="text-danger">*</span></label>
+                        <label for="password" class="control-label"><?php echo __t('password', 'Password'); ?> <span class="text-danger">*</span></label>
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
                           </div>
-                          <input id="password" type="password" class="form-control" name="password" placeholder="Masukkan password" required>
+                          <input id="password" type="password" class="form-control" name="password" placeholder="<?php echo __t('password', 'Masukkan password'); ?>" required>
                         </div>
                       </div>
 
                       <div class="form-group mt-4">
                         <button type="submit" class="btn btn-primary btn-lg btn-block font-weight-bold shadow-sm">
-                          <i class="fas fa-sign-in-alt mr-1"></i> Masuk Sekarang
+                          <i class="fas fa-sign-in-alt mr-1"></i> <?php echo __t('btn_login', 'Masuk Sekarang'); ?>
                         </button>
                       </div>
                     <?php echo form_close(); ?>
@@ -273,6 +270,9 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                             <div class="font-weight-bold"><i class="fas fa-user-shield mr-1"></i> Admin</div>
                             <small class="text-muted">User: <code>admin</code> | Pass: <code>admin123</code></small>
                           </button>
+                          <a href="<?php echo base_url('docs'); ?>" target="_blank" class="badge badge-light border text-primary mt-1 d-inline-block font-weight-bold py-1 px-2" title="Dokumentasi Sistem Khusus Admin">
+                            <i class="fas fa-book-open mr-1"></i> <?php echo __t('menu_docs', 'Dokumentasi Sistem'); ?> (Admin) &rarr;
+                          </a>
                         </div>
                         <div class="col-md-6 mb-2">
                           <button type="button" class="btn btn-outline-success btn-sm btn-block text-left py-2" onclick="fillCreds('VTR-2026-009', 'voter123')">
