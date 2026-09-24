@@ -17,6 +17,13 @@ $lang['menu_docs']           = 'Dokumentasi Sistem';
 $lang['menu_account']        = 'Pengaturan Akun';
 $lang['menu_logout']         = 'Logout';
 $lang['logged_in_as']        = 'Masuk sebagai';
+$lang['reseed_db']           = 'Re-Seed Database';
+$lang['reset_votes_only']    = 'Reset Suara Saja';
+
+// Confirmations
+$lang['confirm_reseed']      = 'Jalankan migrasi ulang dan reset ke data awal?';
+$lang['confirm_reset_votes'] = 'Kosongkan semua suara yang sudah masuk?';
+$lang['confirm_logout']      = 'Apakah Anda yakin ingin logout?';
 
 // Auth & Login
 $lang['login_title']         = 'Masuk ke Sistem E-Voting';
@@ -58,13 +65,43 @@ $lang['btn_vote_this']       = 'Coblos Paslon Ini';
 $lang['confirm_vote']        = 'Konfirmasi Pencoblosan';
 $lang['already_voted_title'] = 'Hak Suara Telah Digunakan';
 $lang['already_voted_desc']  = 'Anda sudah berhasil mencoblos sebelumnya. Terima kasih atas partisipasi Anda!';
+$lang['select_candidate']    = 'Pilih Pasangan Calon';
+$lang['selected_voter']      = 'Identitas Pemilih Terverifikasi';
+
+// Candidates CRUD
+$lang['candidate_list']      = 'Daftar Pasangan Calon';
+$lang['add_candidate']       = 'Tambah Paslon Baru';
+$lang['edit_candidate']      = 'Edit Paslon';
+$lang['candidate_number']    = 'Nomor Urut';
+$lang['chairman']            = 'Calon Ketua';
+$lang['vice_chairman']       = 'Calon Wakil Ketua';
+$lang['vision']              = 'Visi';
+$lang['mission']             = 'Misi';
+$lang['theme_color']         = 'Warna Tema Paslon';
+$lang['photo']               = 'Foto Paslon';
+
+// Voters DPT CRUD
+$lang['voter_list']          = 'Daftar Pemilih Tetap (DPT)';
+$lang['add_voter']           = 'Tambah Pemilih Baru';
+$lang['edit_voter']          = 'Edit Data Pemilih';
+$lang['voter_code']          = 'Kode Pemilih / NIM / NIS';
+$lang['voter_name']          = 'Nama Lengkap';
+$lang['gender']              = 'Jenis Kelamin';
+$lang['class_or_dept']       = 'Kelas / Jurusan / Unit';
+$lang['card_uid']            = 'UID Kartu (RFID / NFC)';
+$lang['has_voted']           = 'Sudah Memilih';
+$lang['not_voted']           = 'Belum Memilih';
+$lang['reset_status']        = 'Reset Status';
+$lang['reset_all']           = 'Reset Semua Suara';
 
 // Common
 $lang['save']                = 'Simpan';
 $lang['cancel']              = 'Batal';
 $lang['edit']                = 'Edit';
 $lang['delete']              = 'Hapus';
+$lang['detail']              = 'Detail';
 $lang['back']                = 'Kembali';
 $lang['status']              = 'Status';
 $lang['action']              = 'Aksi';
 $lang['language']            = 'Bahasa';
+$lang['home']                = 'Beranda';

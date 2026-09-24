@@ -17,6 +17,13 @@ $lang['menu_docs']           = 'System Documentation';
 $lang['menu_account']        = 'Account Settings';
 $lang['menu_logout']         = 'Logout';
 $lang['logged_in_as']        = 'Logged in as';
+$lang['reseed_db']           = 'Re-Seed Database';
+$lang['reset_votes_only']    = 'Reset Votes Only';
+
+// Confirmations
+$lang['confirm_reseed']      = 'Re-run migration and reset database to initial seed data?';
+$lang['confirm_reset_votes'] = 'Clear and truncate all votes that have been cast?';
+$lang['confirm_logout']      = 'Are you sure you want to log out?';
 
 // Auth & Login
 $lang['login_title']         = 'Sign In to E-Voting System';
@@ -58,13 +65,43 @@ $lang['btn_vote_this']       = 'Vote This Candidate';
 $lang['confirm_vote']        = 'Confirm Your Vote';
 $lang['already_voted_title'] = 'Vote Has Been Cast';
 $lang['already_voted_desc']  = 'You have already cast your vote in this election. Thank you for your participation!';
+$lang['select_candidate']    = 'Select Candidate Pair';
+$lang['selected_voter']      = 'Verified Voter Identity';
+
+// Candidates CRUD
+$lang['candidate_list']      = 'Candidate Pairs Registry';
+$lang['add_candidate']       = 'Add New Candidate';
+$lang['edit_candidate']      = 'Edit Candidate Pair';
+$lang['candidate_number']    = 'Ballot Number';
+$lang['chairman']            = 'Chairman Candidate';
+$lang['vice_chairman']       = 'Vice-Chairman Candidate';
+$lang['vision']              = 'Vision';
+$lang['mission']             = 'Mission';
+$lang['theme_color']         = 'Candidate Theme Color';
+$lang['photo']               = 'Candidate Photo';
+
+// Voters DPT CRUD
+$lang['voter_list']          = 'Registered Voters (DPT)';
+$lang['add_voter']           = 'Add New Voter';
+$lang['edit_voter']          = 'Edit Voter Details';
+$lang['voter_code']          = 'Voter Code / Student ID';
+$lang['voter_name']          = 'Full Name';
+$lang['gender']              = 'Gender';
+$lang['class_or_dept']       = 'Class / Major / Unit';
+$lang['card_uid']            = 'Card UID (RFID / NFC)';
+$lang['has_voted']           = 'Has Voted';
+$lang['not_voted']           = 'Not Voted';
+$lang['reset_status']        = 'Reset Status';
+$lang['reset_all']           = 'Reset All Votes';
 
 // Common
 $lang['save']                = 'Save';
 $lang['cancel']              = 'Cancel';
 $lang['edit']                = 'Edit';
 $lang['delete']              = 'Delete';
+$lang['detail']              = 'Details';
 $lang['back']                = 'Back';
 $lang['status']              = 'Status';
 $lang['action']              = 'Action';
 $lang['language']            = 'Language';
+$lang['home']                = 'Home';
