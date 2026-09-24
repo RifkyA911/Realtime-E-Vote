@@ -67,14 +67,14 @@ $this->load->view('dist/_partials/header', array('title' => $title));
               <!-- Language Switcher -->
               <div class="dropdown">
                 <a href="#" data-toggle="dropdown" class="badge badge-light border text-dark font-weight-bold dropdown-toggle py-2 px-3 shadow-sm">
-                  <i class="fas fa-globe mr-1"></i> <?php echo (current_lang() === 'en') ? 'English (EN)' : 'Indonesia (ID)'; ?>
+                  <i class="fas fa-globe mr-1"></i> <?php echo (current_lang() === 'id') ? 'Indonesia (ID)' : 'English (EN)'; ?>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                  <a href="<?php echo base_url('lang/switch/id'); ?>" class="dropdown-item small <?php echo (current_lang() !== 'en') ? 'font-weight-bold text-primary' : ''; ?>">
-                    <span class="mr-2">🇮🇩</span> Bahasa Indonesia <?php echo (current_lang() !== 'en') ? '✓' : ''; ?>
+                  <a href="<?php echo base_url('lang/switch/en'); ?>" class="dropdown-item small <?php echo (current_lang() !== 'id') ? 'font-weight-bold text-primary' : ''; ?>">
+                    <span class="mr-2">🇬🇧</span> English <?php echo (current_lang() !== 'id') ? '✓' : ''; ?>
                   </a>
-                  <a href="<?php echo base_url('lang/switch/en'); ?>" class="dropdown-item small <?php echo (current_lang() === 'en') ? 'font-weight-bold text-primary' : ''; ?>">
-                    <span class="mr-2">🇬🇧</span> English <?php echo (current_lang() === 'en') ? '✓' : ''; ?>
+                  <a href="<?php echo base_url('lang/switch/id'); ?>" class="dropdown-item small <?php echo (current_lang() === 'id') ? 'font-weight-bold text-primary' : ''; ?>">
+                    <span class="mr-2">🇮🇩</span> Bahasa Indonesia <?php echo (current_lang() === 'id') ? '✓' : ''; ?>
                   </a>
                 </div>
               </div>
@@ -84,7 +84,7 @@ $this->load->view('dist/_partials/header', array('title' => $title));
               <h2 class="text-primary font-weight-bold mb-0">
                 <i class="fas fa-vote-yea mr-2"></i> Simple E-Vote
               </h2>
-              <p class="text-muted small"><?php echo __t('app_tagline', 'Sistem E-Voting Modern dengan Fitur Tap ID Card (RFID/NFC)'); ?></p>
+              <p class="text-muted small"><?php echo __t('app_tagline', 'Modern E-Voting System with Tap ID Card (RFID/NFC) Feature'); ?></p>
             </div>
 
             <!-- Flash Messages -->
@@ -141,7 +141,7 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                     
                     <div class="d-flex justify-content-between align-items-center mb-3">
                       <span class="badge badge-success px-3 py-1 font-weight-bold">
-                        <i class="fas fa-circle text-white mr-1" style="font-size: 8px;"></i> <?php echo __t('scanner_status_ready', 'Reader Siap Mendeteksi'); ?>
+                        <i class="fas fa-circle text-white mr-1" style="font-size: 8px;"></i> <?php echo __t('scanner_ready', 'Reader Ready to Detect'); ?>
                       </span>
                       <small class="text-muted"><i class="fas fa-keyboard mr-1"></i> Keyboard Wedge / NFC Active</small>
                     </div>
@@ -151,9 +151,9 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                       <div class="scanner-icon-circle" id="scannerIcon">
                         <i class="fas fa-id-card"></i>
                       </div>
-                      <h5 class="text-dark font-weight-bold mb-1" id="scannerStatusTitle"><?php echo __t('scanner_status_ready', 'Tempelkan Kartu ID Anda ke Scanner'); ?></h5>
+                      <h5 class="text-dark font-weight-bold mb-1" id="scannerStatusTitle"><?php echo __t('scanner_status_ready', 'Tap your ID Card on the Scanner'); ?></h5>
                       <p class="text-muted small mb-3" id="scannerStatusDesc">
-                        <?php echo __t('scanner_desc', 'Dekatkan kartu RFID / NFC pada reader atau gunakan sensor NFC ponsel.'); ?>
+                        <?php echo __t('scanner_desc', 'Place your RFID / NFC card on the card reader or use your mobile device NFC sensor.'); ?>
                       </p>
 
                       <!-- Input Field for Scanner (Supports auto-entry from USB RFID reader) -->
@@ -162,24 +162,24 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                           <span class="input-group-text bg-white border-primary"><i class="fas fa-barcode text-primary"></i></span>
                         </div>
                         <input type="text" id="rfidInput" class="form-control form-control-lg text-center font-weight-bold border-primary" 
-                               placeholder="Tap kartu atau ketik UID di sini..." 
+                               placeholder="<?php echo __t('tap_card_placeholder', 'Tap card or enter Card UID here...'); ?>" 
                                autocomplete="off" autofocus>
                         <div class="input-group-append">
                           <button class="btn btn-primary font-weight-bold px-3" type="button" onclick="submitManualTap()">
-                            <i class="fas fa-arrow-right"></i> Masuk
+                            <i class="fas fa-arrow-right"></i> <?php echo __t('btn_enter', 'Enter'); ?>
                           </button>
                         </div>
                       </div>
 
                       <div id="scanFeedback" class="small text-muted mt-2">
-                        <i class="fas fa-info-circle mr-1"></i> Reader otomatis mendeteksi saat kartu ditempelkan (UID 10-Digit / Hex Mifare).
+                        <i class="fas fa-info-circle mr-1"></i> <?php echo __t('scanner_auto_detect_note', 'Reader automatically detects when card is tapped (10-Digit UID / Hex Mifare).'); ?>
                       </div>
                     </div>
 
                     <!-- Web NFC Reader Button (for Android Chrome / Web NFC supported devices) -->
                     <div class="mt-3 text-center" id="nfcSupportSection" style="display: none;">
                       <button type="button" class="btn btn-outline-info btn-block btn-sm py-2 font-weight-bold" id="btnStartWebNfc">
-                        <i class="fas fa-broadcast-tower mr-1"></i> Aktifkan Scan NFC Bawaan HP (Web NFC)
+                        <i class="fas fa-broadcast-tower mr-1"></i> <?php echo __t('enable_phone_nfc', 'Enable Native Phone NFC Scan (Web NFC)'); ?>
                       </button>
                     </div>
 
@@ -187,42 +187,43 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                     <div class="mt-4 pt-3 border-top">
                       <div class="d-flex justify-content-between align-items-center mb-2">
                         <span class="font-weight-bold text-muted small text-uppercase">
-                          <i class="fas fa-magic mr-1"></i> Simulasi Tap Kartu Uji Coba:
+                          <i class="fas fa-magic mr-1"></i> <?php echo __t('simulation_title', 'Demo Card Tap Simulation:'); ?>
                         </span>
-                        <span class="badge badge-light border">1-Klik Tap</span>
+                        <span class="badge badge-light border"><?php echo __t('one_click_tap', '1-Click Tap'); ?></span>
                       </div>
                       
                       <div class="row">
                         <div class="col-md-6 mb-2">
                           <button type="button" class="btn btn-outline-primary btn-sm btn-block text-left p-2 shadow-none" 
                                   onclick="simulateTap('0001002009', 'Irfan Hakim')">
-                            <div class="font-weight-bold text-primary"><i class="fas fa-id-badge mr-1"></i> Kartu: Irfan Hakim</div>
-                            <small class="text-muted">UID: <code>0001002009</code> (Belum Vote)</small>
+                            <div class="font-weight-bold text-primary"><i class="fas fa-id-badge mr-1"></i> <?php echo __t('card_voter', 'Voter Card:'); ?> Irfan Hakim</div>
+                            <small class="text-muted">UID: <code>0001002009</code> (<?php echo __t('status_not_voted', 'Not Voted'); ?>)</small>
                           </button>
                         </div>
                         <div class="col-md-6 mb-2">
                           <button type="button" class="btn btn-outline-success btn-sm btn-block text-left p-2 shadow-none" 
                                   onclick="simulateTap('0001002010', 'Jessica Tan')">
-                            <div class="font-weight-bold text-success"><i class="fas fa-id-badge mr-1"></i> Kartu: Jessica Tan</div>
-                            <small class="text-muted">UID: <code>0001002010</code> (Belum Vote)</small>
+                            <div class="font-weight-bold text-success"><i class="fas fa-id-badge mr-1"></i> <?php echo __t('card_voter', 'Voter Card:'); ?> Jessica Tan</div>
+                            <small class="text-muted">UID: <code>0001002010</code> (<?php echo __t('status_not_voted', 'Not Voted'); ?>)</small>
                           </button>
                         </div>
                         <div class="col-md-6 mb-2">
                           <button type="button" class="btn btn-outline-warning btn-sm btn-block text-left p-2 shadow-none" 
                                   onclick="simulateTap('0000000001', 'Admin E-Vote')">
-                            <div class="font-weight-bold text-dark"><i class="fas fa-shield-alt mr-1"></i> Kartu: Administrator</div>
+                            <div class="font-weight-bold text-dark"><i class="fas fa-shield-alt mr-1"></i> <?php echo __t('card_admin', 'Admin Card:'); ?> Administrator</div>
                             <small class="text-muted">UID: <code>0000000001</code> (Full CRUD)</small>
                           </button>
                         </div>
                         <div class="col-md-6 mb-2">
                           <button type="button" class="btn btn-outline-danger btn-sm btn-block text-left p-2 shadow-none" 
                                   onclick="simulateTap('9999999999', 'Kartu Tidak Terdaftar')">
-                            <div class="font-weight-bold text-danger"><i class="fas fa-times-circle mr-1"></i> Kartu Tidak Terdaftar</div>
-                            <small class="text-muted">UID: <code>9999999999</code> (Testing Error)</small>
+                            <div class="font-weight-bold text-danger"><i class="fas fa-times-circle mr-1"></i> <?php echo __t('card_unregistered', 'Unregistered Card'); ?></div>
+                            <small class="text-muted">UID: <code>9999999999</code> (<?php echo __t('testing_error', 'Testing Error'); ?>)</small>
                           </button>
                         </div>
                       </div>
                     </div>
+
 
                   </div>
 
@@ -233,12 +234,12 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                     
                     <?php echo form_open('auth/authenticate', array('class' => 'needs-validation')); ?>
                       <div class="form-group">
-                        <label for="username"><?php echo __t('username', 'Username / Kode Pemilih (NIM/NIS)'); ?> <span class="text-danger">*</span></label>
+                        <label for="username"><?php echo __t('username', 'Username / Voter Code'); ?> <span class="text-danger">*</span></label>
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                           </div>
-                          <input id="username" type="text" class="form-control" name="username" placeholder="<?php echo __t('username', 'Masukkan username admin atau kode pemilih'); ?>" value="<?php echo set_value('username'); ?>" required>
+                          <input id="username" type="text" class="form-control" name="username" placeholder="<?php echo __t('username', 'Enter admin username or voter code'); ?>" value="<?php echo set_value('username'); ?>" required>
                         </div>
                       </div>
 
@@ -248,13 +249,13 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
                           </div>
-                          <input id="password" type="password" class="form-control" name="password" placeholder="<?php echo __t('password', 'Masukkan password'); ?>" required>
+                          <input id="password" type="password" class="form-control" name="password" placeholder="<?php echo __t('password', 'Enter password'); ?>" required>
                         </div>
                       </div>
 
                       <div class="form-group mt-4">
                         <button type="submit" class="btn btn-primary btn-lg btn-block font-weight-bold shadow-sm">
-                          <i class="fas fa-sign-in-alt mr-1"></i> <?php echo __t('btn_login', 'Masuk Sekarang'); ?>
+                          <i class="fas fa-sign-in-alt mr-1"></i> <?php echo __t('btn_login', 'Sign In Now'); ?>
                         </button>
                       </div>
                     <?php echo form_close(); ?>
@@ -262,21 +263,21 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                     <!-- Demo Account Helpers -->
                     <div class="mt-4 pt-3 border-top">
                       <h6 class="font-weight-bold text-muted small text-uppercase mb-2">
-                        <i class="fas fa-key mr-1"></i> Akun Demo Password:
+                        <i class="fas fa-key mr-1"></i> <?php echo __t('demo_account_title', 'Demo Password Accounts:'); ?>
                       </h6>
                       <div class="row">
                         <div class="col-md-6 mb-2">
                           <button type="button" class="btn btn-outline-primary btn-sm btn-block text-left py-2" onclick="fillCreds('admin', 'admin123')">
-                            <div class="font-weight-bold"><i class="fas fa-user-shield mr-1"></i> Admin</div>
+                            <div class="font-weight-bold"><i class="fas fa-user-shield mr-1"></i> <?php echo __t('admin', 'Admin'); ?></div>
                             <small class="text-muted">User: <code>admin</code> | Pass: <code>admin123</code></small>
                           </button>
-                          <a href="<?php echo base_url('docs'); ?>" target="_blank" class="badge badge-light border text-primary mt-1 d-inline-block font-weight-bold py-1 px-2" title="Dokumentasi Sistem Khusus Admin">
-                            <i class="fas fa-book-open mr-1"></i> <?php echo __t('menu_docs', 'Dokumentasi Sistem'); ?> (Admin) &rarr;
+                          <a href="<?php echo base_url('docs'); ?>" target="_blank" class="badge badge-light border text-primary mt-1 d-inline-block font-weight-bold py-1 px-2" title="<?php echo __t('admin_docs_link', 'System Documentation (Admin)'); ?>">
+                            <i class="fas fa-book-open mr-1"></i> <?php echo __t('menu_docs', 'System Documentation'); ?> (Admin) &rarr;
                           </a>
                         </div>
                         <div class="col-md-6 mb-2">
                           <button type="button" class="btn btn-outline-success btn-sm btn-block text-left py-2" onclick="fillCreds('VTR-2026-009', 'voter123')">
-                            <div class="font-weight-bold"><i class="fas fa-user-check mr-1"></i> Pemilih</div>
+                            <div class="font-weight-bold"><i class="fas fa-user-check mr-1"></i> <?php echo __t('voter', 'Voter'); ?></div>
                             <small class="text-muted">User: <code>VTR-2026-009</code> | Pass: <code>voter123</code></small>
                           </button>
                         </div>
@@ -290,9 +291,9 @@ $this->load->view('dist/_partials/header', array('title' => $title));
             </div>
 
             <div class="simple-footer text-center text-muted">
-              <strong>Simple E-Vote</strong> &bull; <?php echo __t('app_tagline', 'Sistem E-Voting Modern dengan Fitur Tap ID Card (RFID/NFC)'); ?>
+              <strong>Simple E-Vote</strong> &bull; <?php echo __t('app_tagline', 'Modern E-Voting System with Tap ID Card (RFID/NFC) Feature'); ?>
               <div class="mt-1">
-                <a href="<?php echo base_url('docs'); ?>" target="_blank" class="small text-primary"><i class="fas fa-book mr-1"></i> <?php echo __t('menu_docs', 'Dokumentasi Sistem & API'); ?></a>
+                <a href="<?php echo base_url('docs'); ?>" target="_blank" class="small text-primary"><i class="fas fa-book mr-1"></i> <?php echo __t('menu_docs', 'System Documentation'); ?></a>
               </div>
             </div>
           </div>
@@ -388,8 +389,8 @@ function submitCardTap(cardUid) {
   // Visual feedback on scanner box
   $('#scannerZone').addClass('scanning');
   $('#scannerIcon').html('<i class="fas fa-spinner fa-spin"></i>');
-  $('#scannerStatusTitle').text('Memverifikasi Kartu...');
-  $('#scannerStatusDesc').html('Memeriksa ID: <strong class="text-primary font-monospace">' + cardUid + '</strong> di sistem...');
+  $('#scannerStatusTitle').text('<?php echo addslashes(__t("verifying_card", "Verifying Card...")); ?>');
+  $('#scannerStatusDesc').html('UID: <strong class="text-primary font-monospace">' + cardUid + '</strong>');
   $('#rfidInput').prop('disabled', true);
 
   $.ajax({
@@ -401,12 +402,12 @@ function submitCardTap(cardUid) {
       if (res.status === 'success') {
         playBeep('success');
         $('#scannerIcon').html('<i class="fas fa-check"></i>');
-        $('#scannerStatusTitle').html('<span class="text-success"><i class="fas fa-check-circle mr-1"></i> Kartu Terverifikasi!</span>');
-        $('#scannerStatusDesc').html('Selamat datang, <strong>' + res.name + '</strong>.<br><span class="text-muted small">Mengalihkan ke halaman tujuan...</span>');
+        $('#scannerStatusTitle').html('<span class="text-success"><i class="fas fa-check-circle mr-1"></i> <?php echo addslashes(__t("card_verified", "Card Verified!")); ?></span>');
+        $('#scannerStatusDesc').html('<strong>' + res.name + '</strong><br><span class="text-muted small"><?php echo addslashes(__t("redirecting", "Redirecting to destination page...")); ?></span>');
 
         if (typeof iziToast !== 'undefined') {
           iziToast.success({
-            title: 'Berhasil!',
+            title: '<?php echo addslashes(__t("success", "Success!")); ?>',
             message: res.message,
             position: 'topCenter',
             timeout: 2000
@@ -423,7 +424,7 @@ function submitCardTap(cardUid) {
     },
     error: function() {
       playBeep('error');
-      resetScannerUI('Terjadi kendala koneksi ke server. Silakan coba lagi!');
+      resetScannerUI('<?php echo addslashes(__t("connection_error", "Server connection error. Please try again!")); ?>');
     }
   });
 }
@@ -432,17 +433,17 @@ function resetScannerUI(errorMessage) {
   isProcessingTap = false;
   $('#scannerZone').removeClass('scanning');
   $('#scannerIcon').html('<i class="fas fa-id-card"></i>');
-  $('#scannerStatusTitle').text('Tempelkan Kartu ID / RFID Anda');
-  $('#scannerStatusDesc').text('Dekatkan kartu pemilih ke reader USB / NFC untuk langsung masuk ke Bilik Suara tanpa password.');
+  $('#scannerStatusTitle').text('<?php echo addslashes(__t("scanner_status_ready", "Tap your ID Card on the Scanner")); ?>');
+  $('#scannerStatusDesc').text('<?php echo addslashes(__t("reader_instruction_box", "Hold voter card near USB reader / NFC sensor to enter Voting Booth directly without password.")); ?>');
   $('#rfidInput').prop('disabled', false).val('').focus();
 
   if (errorMessage) {
     if (typeof swal !== 'undefined') {
       swal({
-        title: 'Akses Ditolak!',
+        title: '<?php echo addslashes(__t("access_denied", "Access Denied!")); ?>',
         text: errorMessage,
         icon: 'error',
-        button: 'Tutup'
+        button: '<?php echo addslashes(__t("close", "Close")); ?>'
       }).then(function() {
         $('#rfidInput').focus();
       });
