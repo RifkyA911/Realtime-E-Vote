@@ -245,3 +245,21 @@ $lang['language']             = 'Bahasa';
 $lang['home']                 = 'Beranda';
 $lang['success']              = 'Berhasil!';
 $lang['close']                = 'Tutup';
+
+// WebSocket & Real-time Live Preview
+$lang['ws_connected']         = 'WebSocket: Siaran Langsung (Live)';
+$lang['ws_polling_fallback']  = 'Fallback Polling (Aktif)';
+$lang['ws_connecting']        = 'Menghubungkan WebSocket...';
+$lang['ws_disconnected']      = 'WebSocket Terputus';
+$lang['live_preview_title']   = 'Preview Persentase & Perolehan Suara';
+$lang['live_preview_desc']    = 'Preview perolehan suara paslon terupdate realtime via WebSocket';
+$lang['turnout_rate']         = 'Tingkat Partisipasi Pemilih';
+$lang['total_ballots_cast']   = 'Total Suara Masuk';
+$lang['view_full_dashboard']  = 'Buka Dashboard Live Count Lengkap';
+$lang['ws_stream_card_title'] = 'Mesin Siaran Real-Time WebSocket';
+$lang['ws_server_url']        = 'URL Server';
+$lang['ws_mode']              = 'Mode Siaran';
+$lang['ws_last_event']        = 'Event Siaran Terakhir';
+$lang['ws_test_trigger']      = 'Uji Siaran Push';
+$lang['ws_engine_badge']      = 'Engine Native RFC 6455';
+

@@ -60,32 +60,34 @@ $this->load->view('dist/_partials/header', array('title' => $title));
 <body>
   <div id="app">
     <section class="section">
-      <div class="container mt-4 mb-5">
-        <div class="row">
-          <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
-            <div class="d-flex justify-content-end align-items-center mb-3">
-              <!-- Language Switcher -->
-              <div class="dropdown">
-                <a href="#" data-toggle="dropdown" class="badge badge-light border text-dark font-weight-bold dropdown-toggle py-2 px-3 shadow-sm">
-                  <i class="fas fa-globe mr-1"></i> <?php echo (current_lang() === 'id') ? 'Indonesia (ID)' : 'English (EN)'; ?>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                  <a href="<?php echo base_url('lang/switch/en'); ?>" class="dropdown-item small <?php echo (current_lang() !== 'id') ? 'font-weight-bold text-primary' : ''; ?>">
-                    <span class="mr-2">🇬🇧</span> English <?php echo (current_lang() !== 'id') ? '✓' : ''; ?>
-                  </a>
-                  <a href="<?php echo base_url('lang/switch/id'); ?>" class="dropdown-item small <?php echo (current_lang() === 'id') ? 'font-weight-bold text-primary' : ''; ?>">
-                    <span class="mr-2">🇮🇩</span> Bahasa Indonesia <?php echo (current_lang() === 'id') ? '✓' : ''; ?>
-                  </a>
-                </div>
-              </div>
+      <div class="container-fluid px-3 px-md-5 mt-4 mb-5" style="max-width: 1360px;">
+        
+        <!-- Top Header & Language Switcher -->
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap pb-2 border-bottom">
+          <div class="login-brand text-left mb-2 mb-md-0">
+            <h2 class="text-primary font-weight-bold mb-0">
+              <i class="fas fa-vote-yea mr-2"></i> Simple E-Vote
+            </h2>
+            <p class="text-muted small mb-0"><?php echo __t('app_tagline', 'Modern E-Voting System with Tap ID Card (RFID/NFC) Feature'); ?></p>
+          </div>
+          <div class="dropdown">
+            <a href="#" data-toggle="dropdown" class="badge badge-light border text-dark font-weight-bold dropdown-toggle py-2 px-3 shadow-sm">
+              <i class="fas fa-globe mr-1"></i> <?php echo (current_lang() === 'id') ? 'Indonesia (ID)' : 'English (EN)'; ?>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right shadow-sm">
+              <a href="<?php echo base_url('lang/switch/en'); ?>" class="dropdown-item small <?php echo (current_lang() !== 'id') ? 'font-weight-bold text-primary' : ''; ?>">
+                <span class="mr-2">🇬🇧</span> English <?php echo (current_lang() !== 'id') ? '✓' : ''; ?>
+              </a>
+              <a href="<?php echo base_url('lang/switch/id'); ?>" class="dropdown-item small <?php echo (current_lang() === 'id') ? 'font-weight-bold text-primary' : ''; ?>">
+                <span class="mr-2">🇮🇩</span> Bahasa Indonesia <?php echo (current_lang() === 'id') ? '✓' : ''; ?>
+              </a>
             </div>
+          </div>
+        </div>
 
-            <div class="login-brand text-center mb-3">
-              <h2 class="text-primary font-weight-bold mb-0">
-                <i class="fas fa-vote-yea mr-2"></i> Simple E-Vote
-              </h2>
-              <p class="text-muted small"><?php echo __t('app_tagline', 'Modern E-Voting System with Tap ID Card (RFID/NFC) Feature'); ?></p>
-            </div>
+        <div class="row">
+          <!-- Left Column: Login Card -->
+          <div class="col-12 col-lg-7 col-xl-7 mb-4">
 
             <!-- Flash Messages -->
             <?php if ($this->session->flashdata('success')): ?>
@@ -288,14 +290,107 @@ $this->load->view('dist/_partials/header', array('title' => $title));
 
                 </div>
               </div>
-            </div>
+            </div> <!-- End Left Column Card -->
+          </div> <!-- End col-lg-7 Left Column -->
 
-            <div class="simple-footer text-center text-muted">
-              <strong>Simple E-Vote</strong> &bull; <?php echo __t('app_tagline', 'Modern E-Voting System with Tap ID Card (RFID/NFC) Feature'); ?>
-              <div class="mt-1">
-                <a href="<?php echo base_url('docs'); ?>" target="_blank" class="small text-primary"><i class="fas fa-book mr-1"></i> <?php echo __t('menu_docs', 'System Documentation'); ?></a>
+          <!-- Right Column: Real-time Live Vote Percentage Preview Card -->
+          <div class="col-12 col-lg-5 col-xl-5 mb-4">
+            <div class="card card-primary shadow-sm h-100">
+              <div class="card-header d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0 font-weight-bold text-dark">
+                  <i class="fas fa-chart-pie mr-2 text-primary"></i> <?php echo __t('live_preview_title', 'Live Vote Standings & Percentage'); ?>
+                </h5>
+                <span id="preview-ws-badge" class="badge badge-success px-2 py-1 shadow-sm" style="font-size: 11px;">
+                  <i class="fas fa-bolt mr-1"></i> <span id="preview-ws-text"><?php echo __t('ws_connected', 'WebSocket: Live Push'); ?></span>
+                </span>
+              </div>
+              <div class="card-body p-3">
+                <!-- Turnout Summary Box -->
+                <div class="p-3 bg-light rounded border mb-3">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="font-weight-bold text-muted small text-uppercase">
+                      <i class="fas fa-users mr-1 text-primary"></i> <?php echo __t('turnout_rate', 'Voter Turnout Rate'); ?>
+                    </span>
+                    <span class="badge badge-primary font-weight-bold px-2 py-1" id="preview-turnout-rate" style="font-size: 13px;">
+                      <?php echo isset($participation_rate) ? $participation_rate : 0; ?>%
+                    </span>
+                  </div>
+                  <div class="progress" style="height: 10px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" id="preview-turnout-bar" role="progressbar" style="width: <?php echo isset($participation_rate) ? $participation_rate : 0; ?>%;"></div>
+                  </div>
+                  <div class="d-flex justify-content-between text-muted small mt-2">
+                    <span><?php echo __t('total_ballots_cast', 'Ballots Cast'); ?>: <strong class="text-dark" id="preview-voted-count"><?php echo isset($total_voted) ? number_format($total_voted) : 0; ?></strong></span>
+                    <span><?php echo __t('registered_in_dpt', 'Total DPT'); ?>: <strong class="text-dark" id="preview-voters-count"><?php echo isset($total_voters) ? number_format($total_voters) : 0; ?></strong></span>
+                  </div>
+                </div>
+
+                <!-- Candidates List -->
+                <h6 class="font-weight-bold text-muted small text-uppercase mb-2">
+                  <i class="fas fa-trophy mr-1 text-warning"></i> <?php echo __t('candidate_registry', 'Candidate Pairs'); ?>:
+                </h6>
+                <div id="preview-candidate-container">
+                  <?php if (!empty($candidates)): ?>
+                    <?php foreach ($candidates as $c): ?>
+                      <?php 
+                        $photo_file = !empty($c->photo) ? $c->photo : 'candidate-1.png';
+                        $photo_src = base_url() . 'assets/uploads/candidates/' . $photo_file;
+                        $theme_col = $c->color ?: '#6777ef';
+                      ?>
+                      <div class="card mb-2 border shadow-sm" id="preview-cand-card-<?php echo $c->id; ?>" style="border-left: 4px solid <?php echo $theme_col; ?> !important;">
+                        <div class="card-body p-2 d-flex align-items-center">
+                          <div class="mr-2 position-relative">
+                            <img src="<?php echo $photo_src; ?>" class="rounded-circle border" width="46" height="46" style="object-fit: cover;">
+                            <span class="badge badge-pill text-white position-absolute" style="background-color: <?php echo $theme_col; ?>; bottom: -4px; right: -4px; font-size: 10px; padding: 2px 5px;">
+                              #0<?php echo $c->candidate_number; ?>
+                            </span>
+                          </div>
+                          <div class="flex-grow-1 ml-1" style="min-width: 0;">
+                            <div class="d-flex justify-content-between align-items-center">
+                              <div class="font-weight-bold text-dark text-truncate" style="max-width: 170px;" title="<?php echo htmlspecialchars($c->chairman_name . ' & ' . $c->vice_chairman_name); ?>">
+                                <?php echo $c->chairman_name; ?> &amp; <?php echo $c->vice_chairman_name; ?>
+                              </div>
+                              <div class="text-right">
+                                <span class="font-weight-bold" id="preview-cand-pct-<?php echo $c->id; ?>" style="color: <?php echo $theme_col; ?>; font-size: 15px;">
+                                  <?php echo $c->percentage; ?>%
+                                </span>
+                              </div>
+                            </div>
+                            <div class="d-flex justify-content-between text-muted small mb-1">
+                              <span><?php echo __t('candidate_pair', 'Candidate Pair'); ?> 0<?php echo $c->candidate_number; ?></span>
+                              <span id="preview-cand-votes-<?php echo $c->id; ?>"><?php echo number_format($c->total_votes); ?> <?php echo __t('votes', 'votes'); ?></span>
+                            </div>
+                            <div class="progress" style="height: 6px;">
+                              <div class="progress-bar" id="preview-cand-bar-<?php echo $c->id; ?>" style="width: <?php echo $c->percentage; ?>%; background-color: <?php echo $theme_col; ?>;"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <?php endforeach; ?>
+                  <?php else: ?>
+                    <div class="text-center py-3 text-muted small">
+                      <?php echo __t('no_candidates_yet', 'No candidate data available'); ?>
+                    </div>
+                  <?php endif; ?>
+                </div>
+
+                <!-- Live indicator footer -->
+                <div class="mt-3 pt-2 border-top text-center">
+                  <div class="text-muted small mb-2">
+                    <i class="far fa-clock mr-1"></i> <?php echo __t('last_updated', 'Last Updated'); ?>: <strong id="preview-last-updated"><?php echo date('H:i:s'); ?></strong>
+                  </div>
+                  <a href="<?php echo base_url('dashboard'); ?>" class="btn btn-outline-primary btn-sm btn-block font-weight-bold">
+                    <i class="fas fa-chart-bar mr-1"></i> <?php echo __t('view_full_dashboard', 'Open Full Live Count Dashboard'); ?> &rarr;
+                  </a>
+                </div>
               </div>
             </div>
+          </div> <!-- End Right Column -->
+        </div>
+
+        <div class="simple-footer text-center text-muted mt-3">
+          <strong>Simple E-Vote</strong> &bull; <?php echo __t('app_tagline', 'Modern E-Voting System with Tap ID Card (RFID/NFC) Feature'); ?>
+          <div class="mt-1">
+            <a href="<?php echo base_url('docs'); ?>" target="_blank" class="small text-primary"><i class="fas fa-book mr-1"></i> <?php echo __t('menu_docs', 'System Documentation'); ?></a>
           </div>
         </div>
       </div>
@@ -557,11 +652,118 @@ $(document).ready(function() {
           playBeep('error');
           alert('Gagal membaca kartu NFC. Pastikan kartu didekatkan dengan stabil.');
         };
+
       } catch (error) {
-        alert('Gagal mengaktifkan Web NFC: ' + error);
+        console.warn('NFC scan failed:', error);
+        alert('NFC is not available or permission denied.');
       }
     });
   }
+
+  // =========================================================================
+  // 6. REAL-TIME WEBSOCKET & POLLING PREVIEW ENGINE
+  // =========================================================================
+  var wsPreview = null;
+  var wsPreviewReconnectTimer = null;
+  var fallbackPollInterval = null;
+
+  function initPreviewWebSocket() {
+    var wsHost = window.location.hostname || 'localhost';
+    var wsUrl = 'ws://' + wsHost + ':8088';
+
+    try {
+      wsPreview = new WebSocket(wsUrl);
+
+      wsPreview.onopen = function() {
+        $('#preview-ws-badge').removeClass('badge-light badge-info badge-danger').addClass('badge-success');
+        $('#preview-ws-text').html('<?php echo addslashes(__t("ws_connected", "WebSocket: Live Push")); ?>');
+        if (fallbackPollInterval) {
+          clearInterval(fallbackPollInterval);
+          fallbackPollInterval = null;
+        }
+      };
+
+      wsPreview.onmessage = function(event) {
+        try {
+          var data = JSON.parse(event.data);
+          if (data && (data.type === 'live_stats' || data.candidates)) {
+            updateLivePreviewUI(data);
+          }
+        } catch (err) {}
+      };
+
+      wsPreview.onclose = function() {
+        handlePreviewWsFallback();
+      };
+
+      wsPreview.onerror = function() {
+        handlePreviewWsFallback();
+      };
+    } catch (e) {
+      handlePreviewWsFallback();
+    }
+  }
+
+  function handlePreviewWsFallback() {
+    $('#preview-ws-badge').removeClass('badge-success badge-danger').addClass('badge-info');
+    $('#preview-ws-text').html('<?php echo addslashes(__t("ws_polling_fallback", "Polling Fallback")); ?>');
+
+    if (!fallbackPollInterval) {
+      fallbackPollInterval = setInterval(fetchPreviewStatsAjax, 4000);
+    }
+
+    if (!wsPreviewReconnectTimer) {
+      wsPreviewReconnectTimer = setTimeout(function() {
+        wsPreviewReconnectTimer = null;
+        initPreviewWebSocket();
+      }, 10000);
+    }
+  }
+
+  function fetchPreviewStatsAjax() {
+    $.ajax({
+      url: '<?php echo base_url("auth/live_stats"); ?>',
+      type: 'GET',
+      dataType: 'json',
+      success: function(data) {
+        if (data && data.status === 'success') {
+          updateLivePreviewUI(data);
+        }
+      }
+    });
+  }
+
+  function updateLivePreviewUI(data) {
+    if (data.participation_rate !== undefined) {
+      $('#preview-turnout-rate').text(data.participation_rate + '%');
+      $('#preview-turnout-bar').css('width', data.participation_rate + '%');
+    }
+    if (data.total_voted !== undefined) {
+      $('#preview-voted-count').text(Number(data.total_voted).toLocaleString());
+    }
+    if (data.total_voters !== undefined) {
+      $('#preview-voters-count').text(Number(data.total_voters).toLocaleString());
+    }
+
+    if (data.candidates && data.candidates.length) {
+      data.candidates.forEach(function(c) {
+        var pctEl = $('#preview-cand-pct-' + c.id);
+        var barEl = $('#preview-cand-bar-' + c.id);
+        var votesEl = $('#preview-cand-votes-' + c.id);
+
+        if (pctEl.length) pctEl.text(c.percentage + '%');
+        if (barEl.length) barEl.css('width', c.percentage + '%');
+        if (votesEl.length) votesEl.text(Number(c.total_votes).toLocaleString() + ' <?php echo addslashes(__t("votes", "votes")); ?>');
+      });
+    }
+
+    var now = new Date();
+    var timeStr = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2) + ':' + ('0' + now.getSeconds()).slice(-2);
+    $('#preview-last-updated').text(timeStr);
+  }
+
+  // Start WebSocket client for preview card
+  initPreviewWebSocket();
 });
 </script>
 </body>

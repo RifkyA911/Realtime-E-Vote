@@ -245,3 +245,21 @@ $lang['language']             = 'Language';
 $lang['home']                 = 'Home';
 $lang['success']              = 'Success!';
 $lang['close']                = 'Close';
+
+// WebSocket & Real-time Live Preview
+$lang['ws_connected']         = 'WebSocket: Live Push';
+$lang['ws_polling_fallback']  = 'Polling Fallback (Active)';
+$lang['ws_connecting']        = 'Connecting WebSocket...';
+$lang['ws_disconnected']      = 'WebSocket Disconnected';
+$lang['live_preview_title']   = 'Live Vote Standings & Percentage';
+$lang['live_preview_desc']    = 'Real-time candidate standings preview updated via WebSocket';
+$lang['turnout_rate']         = 'Voter Turnout Rate';
+$lang['total_ballots_cast']   = 'Ballots Cast';
+$lang['view_full_dashboard']  = 'Open Full Live Count Dashboard';
+$lang['ws_stream_card_title'] = 'WebSocket Real-Time Stream Engine';
+$lang['ws_server_url']        = 'Server URL';
+$lang['ws_mode']              = 'Broadcast Mode';
+$lang['ws_last_event']        = 'Last Broadcast Event';
+$lang['ws_test_trigger']      = 'Test Push Broadcast';
+$lang['ws_engine_badge']      = 'RFC 6455 Native Engine';
+

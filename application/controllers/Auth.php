@@ -12,6 +12,8 @@ class Auth extends CI_Controller {
 		$this->lang->load('app', $folder);
 
 		$this->load->model('User_model');
+		$this->load->model('Candidate_model');
+		$this->load->model('Voter_model');
 	}
 
 	public function login() {
@@ -19,10 +21,41 @@ class Auth extends CI_Controller {
 			redirect('dashboard');
 		}
 
+		$total_voters = $this->Voter_model->count_all();
+		$total_voted  = $this->Voter_model->count_voted();
+		$total_unvoted = $this->Voter_model->count_unvoted();
+		$participation_rate = ($total_voters > 0) ? round(($total_voted / $total_voters) * 100, 1) : 0;
+		$candidates = $this->Candidate_model->get_with_votes_count();
+
 		$data = array(
-			'title' => __t('login_title', 'Sign In to Simple E-Vote')
+			'title'              => __t('login_title', 'Sign In to Simple E-Vote'),
+			'total_voters'       => $total_voters,
+			'total_voted'        => $total_voted,
+			'total_unvoted'      => $total_unvoted,
+			'participation_rate' => $participation_rate,
+			'candidates'         => $candidates
 		);
 		$this->load->view('auth/login', $data);
+	}
+
+	public function live_stats() {
+		$total_voters = $this->Voter_model->count_all();
+		$total_voted  = $this->Voter_model->count_voted();
+		$total_unvoted = $this->Voter_model->count_unvoted();
+		$participation_rate = ($total_voters > 0) ? round(($total_voted / $total_voters) * 100, 1) : 0;
+		$candidates = $this->Candidate_model->get_with_votes_count();
+
+		return $this->output
+			->set_content_type('application/json')
+			->set_output(json_encode(array(
+				'status'             => 'success',
+				'timestamp'          => date('Y-m-d H:i:s'),
+				'total_voters'       => $total_voters,
+				'total_voted'        => $total_voted,
+				'total_unvoted'      => $total_unvoted,
+				'participation_rate' => $participation_rate,
+				'candidates'         => $candidates
+			)));
 	}
 
 	public function authenticate() {

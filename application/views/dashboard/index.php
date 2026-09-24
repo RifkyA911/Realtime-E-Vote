@@ -7,11 +7,19 @@ $this->load->view('dist/_partials/header', array('title' => $title));
         <section class="section">
           <div class="section-header d-flex justify-content-between align-items-center flex-wrap">
             <div>
-              <h1><i class="fas fa-chart-pie mr-2 text-primary"></i> Simple E-Vote &mdash; <?php echo __t('menu_dashboard', 'Dashboard Real Count'); ?></h1>
+              <h1><i class="fas fa-chart-pie mr-2 text-primary"></i> Simple E-Vote &mdash; <?php echo __t('menu_dashboard', 'Dashboard & Live Count'); ?></h1>
             </div>
             
             <!-- Real-Time Live Count Controls & Cetak Rekap -->
             <div class="d-flex align-items-center flex-wrap mt-2 mt-md-0">
+              <!-- WebSocket Indicator Badge -->
+              <div class="mr-2 mb-1">
+                <span id="ws-indicator-badge" class="badge badge-light border text-muted px-3 py-2 d-inline-flex align-items-center shadow-sm" style="font-size: 12px;">
+                  <i class="fas fa-satellite-dish mr-1 text-primary" id="ws-indicator-icon"></i>
+                  <span id="ws-indicator-text"><?php echo __t('ws_connecting', 'Connecting WebSocket...'); ?></span>
+                </span>
+              </div>
+
               <!-- Live Indicator Badge -->
               <div class="mr-2 mb-1">
                 <span id="live-indicator-badge" class="badge badge-success px-3 py-2 d-inline-flex align-items-center shadow-sm" style="font-size: 12px;">
@@ -22,18 +30,18 @@ $this->load->view('dist/_partials/header', array('title' => $title));
               </div>
 
               <!-- Toggle Auto-Refresh -->
-              <button id="btn-toggle-live" class="btn btn-sm btn-outline-secondary mr-2 mb-1 shadow-sm" title="Jeda / Lanjutkan Auto Refresh">
-                <i class="fas fa-pause mr-1" id="btn-toggle-icon"></i> <span id="btn-toggle-text"><?php echo __t('btn_pause', 'Jeda'); ?></span>
+              <button id="btn-toggle-live" class="btn btn-sm btn-outline-secondary mr-2 mb-1 shadow-sm" title="<?php echo __t('btn_pause', 'Pause'); ?>">
+                <i class="fas fa-pause mr-1" id="btn-toggle-icon"></i> <span id="btn-toggle-text"><?php echo __t('btn_pause', 'Pause'); ?></span>
               </button>
 
               <!-- Manual Refresh -->
-              <button id="btn-manual-refresh" class="btn btn-sm btn-outline-primary mr-2 mb-1 shadow-sm" title="Refresh Sekarang">
+              <button id="btn-manual-refresh" class="btn btn-sm btn-outline-primary mr-2 mb-1 shadow-sm" title="<?php echo __t('btn_refresh', 'Refresh'); ?>">
                 <i class="fas fa-sync-alt mr-1"></i> <?php echo __t('btn_refresh', 'Refresh'); ?>
               </button>
 
               <!-- Cetak Berita Acara & Rekapitulasi Suara -->
               <a href="<?php echo base_url('dashboard/print_rekap'); ?>" target="_blank" class="btn btn-sm btn-danger font-weight-bold shadow-sm mb-1">
-                <i class="fas fa-print mr-1"></i> <?php echo __t('menu_print_recap', 'Cetak Berita Acara'); ?>
+                <i class="fas fa-print mr-1"></i> <?php echo __t('menu_print_recap', 'Print Official Recap'); ?>
               </a>
             </div>
           </div>
@@ -60,10 +68,10 @@ $this->load->view('dist/_partials/header', array('title' => $title));
           <!-- Last Updated Bar -->
           <div class="d-flex justify-content-between align-items-center mb-3 text-muted small px-1">
             <div>
-              <i class="fas fa-clock mr-1 text-primary"></i> Update Terakhir: <strong id="last-update-time" class="text-dark"><?php echo date('H:i:s'); ?> WIB</strong>
+              <i class="fas fa-clock mr-1 text-primary"></i> <?php echo __t('last_updated', 'Last Updated'); ?>: <strong id="last-update-time" class="text-dark"><?php echo date('H:i:s'); ?></strong>
             </div>
             <div>
-              <span class="badge badge-light border"><i class="fas fa-shield-alt text-success mr-1"></i> Sistem Real-Time &amp; Terverifikasi</span>
+              <span class="badge badge-light border"><i class="fas fa-shield-alt text-success mr-1"></i> <?php echo __t('realtime_verified_system', 'Real-Time & Verified System'); ?></span>
             </div>
           </div>
 
@@ -73,12 +81,12 @@ $this->load->view('dist/_partials/header', array('title' => $title));
               <div class="hero bg-primary text-white mb-4 rounded shadow-sm" style="padding: 22px 28px;">
                 <div class="hero-inner d-flex justify-content-between align-items-center flex-wrap">
                   <div>
-                    <h2 class="text-white mb-1"><i class="fas fa-person-booth mr-2"></i> Simple E-Vote &bull; <?php echo __t('hero_title', 'Sistem E-Voting Pemilihan Online'); ?></h2>
-                    <p class="lead mb-0 text-white-50"><?php echo __t('hero_subtitle', 'Gunakan hak suara secara jujur, adil, transparan, dan real-time.'); ?> <span class="badge badge-light text-primary font-weight-bold ml-1"><i class="fas fa-id-card mr-1"></i> Tap ID Card Ready</span></p>
+                    <h2 class="text-white mb-1"><i class="fas fa-person-booth mr-2"></i> Simple E-Vote &bull; <?php echo __t('hero_title', 'Modern Online E-Voting System'); ?></h2>
+                    <p class="lead mb-0 text-white-50"><?php echo __t('hero_subtitle', 'Cast your vote honestly, fairly, transparently, and in real time.'); ?> <span class="badge badge-light text-primary font-weight-bold ml-1"><i class="fas fa-id-card mr-1"></i> Tap ID Card Ready</span></p>
                   </div>
                   <div class="mt-3 mt-md-0">
                     <a href="<?php echo base_url(); ?>vote" class="btn btn-warning btn-lg font-weight-bold shadow">
-                      <i class="fas fa-vote-yea mr-2"></i> <?php echo __t('enter_booth', 'Masuk ke Bilik Suara'); ?>
+                      <i class="fas fa-vote-yea mr-2"></i> <?php echo __t('enter_booth', 'Enter Voting Booth'); ?>
                     </a>
                   </div>
                 </div>
@@ -95,7 +103,7 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4><?php echo __t('stat_total_dpt', 'Total DPT'); ?></h4>
+                    <h4><?php echo __t('stat_total_dpt', 'Total Voters (DPT)'); ?></h4>
                   </div>
                   <div class="card-body" id="stat-total-voters">
                     <?php echo number_format($total_voters); ?>
@@ -111,7 +119,7 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4><?php echo __t('stat_voted', 'Suara Masuk'); ?></h4>
+                    <h4><?php echo __t('stat_voted', 'Ballots Cast'); ?></h4>
                   </div>
                   <div class="card-body" id="stat-total-voted">
                     <?php echo number_format($total_voted); ?>
@@ -127,7 +135,7 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4><?php echo __t('stat_unvoted', 'Belum Memilih'); ?></h4>
+                    <h4><?php echo __t('stat_unvoted', 'Not Voted'); ?></h4>
                   </div>
                   <div class="card-body" id="stat-total-unvoted">
                     <?php echo number_format($total_unvoted); ?>
@@ -143,7 +151,7 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4><?php echo __t('stat_participation', 'Partisipasi'); ?></h4>
+                    <h4><?php echo __t('stat_participation', 'Participation'); ?></h4>
                   </div>
                   <div class="card-body" id="stat-participation-rate">
                     <?php echo $participation_rate; ?>%
@@ -159,8 +167,8 @@ $this->load->view('dist/_partials/header', array('title' => $title));
             <div class="col-lg-7 col-md-12">
               <div class="card shadow-sm">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                  <h4><i class="fas fa-chart-bar mr-2 text-primary"></i> <?php echo __t('vote_chart_title', 'Grafik Real Count Perolehan Suara'); ?></h4>
-                  <span class="badge badge-primary font-weight-bold" id="badge-chart-voted"><?php echo $total_voted; ?> <?php echo __t('stat_voted', 'Suara Masuk'); ?></span>
+                  <h4><i class="fas fa-chart-bar mr-2 text-primary"></i> <?php echo __t('vote_chart_title', 'Real Count Vote Breakdown Chart'); ?></h4>
+                  <span class="badge badge-primary font-weight-bold" id="badge-chart-voted"><?php echo $total_voted; ?> <?php echo __t('stat_voted', 'Ballots Cast'); ?></span>
                 </div>
                 <div class="card-body">
                   <div id="chart-wrapper">
@@ -171,15 +179,15 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                         <div class="empty-state-icon bg-light text-muted">
                           <i class="fas fa-inbox"></i>
                         </div>
-                        <h2>Belum Ada Suara Masuk</h2>
-                        <p class="lead">Silakan mulai lakukan pencoblosan melalui Bilik Suara.</p>
-                        <a href="<?php echo base_url(); ?>vote" class="btn btn-primary mt-4">Ke Bilik Suara</a>
+                        <h2><?php echo __t('no_votes_yet', 'No Ballots Cast Yet'); ?></h2>
+                        <p class="lead"><?php echo __t('start_voting_prompt', 'Please start voting in the Voting Booth.'); ?></p>
+                        <a href="<?php echo base_url(); ?>vote" class="btn btn-primary mt-4"><?php echo __t('enter_booth', 'Enter Voting Booth'); ?></a>
                       </div>
                     <?php endif; ?>
                   </div>
 
                   <div class="mt-4">
-                    <h6 class="font-weight-bold text-muted mb-3"><i class="fas fa-tasks mr-1"></i> Persentase Perolehan Suara:</h6>
+                    <h6 class="font-weight-bold text-muted mb-3"><i class="fas fa-tasks mr-1"></i> <?php echo __t('vote_percentage', 'Vote Percentage Breakdown:'); ?></h6>
                     <div id="candidate-progress-container">
                       <?php foreach ($candidates as $c): ?>
                         <div class="mb-3 candidate-progress-item" data-candidate-id="<?php echo $c->id; ?>">
@@ -191,7 +199,7 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                               <?php echo $c->chairman_name; ?> &amp; <?php echo $c->vice_chairman_name; ?>
                             </span>
                             <span class="text-primary font-weight-bold" id="progress-text-<?php echo $c->id; ?>">
-                              <?php echo $c->total_votes; ?> suara (<?php echo $c->percentage; ?>%)
+                              <?php echo $c->total_votes; ?> <?php echo __t('votes', 'votes'); ?> (<?php echo $c->percentage; ?>%)
                             </span>
                           </div>
                           <div class="progress" style="height: 12px; border-radius: 6px;">
@@ -213,8 +221,8 @@ $this->load->view('dist/_partials/header', array('title' => $title));
             <div class="col-lg-5 col-md-12">
               <div class="card shadow-sm">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                  <h4><i class="fas fa-users mr-2 text-primary"></i> <?php echo __t('candidate_pairs', 'Pasangan Calon'); ?></h4>
-                  <a href="<?php echo base_url(); ?>candidate" class="btn btn-sm btn-outline-primary"><?php echo __t('view_all', 'Lihat Semua'); ?></a>
+                  <h4><i class="fas fa-users mr-2 text-primary"></i> <?php echo __t('candidate_pairs', 'Candidate Pairs'); ?></h4>
+                  <a href="<?php echo base_url(); ?>candidate" class="btn btn-sm btn-outline-primary"><?php echo __t('view_all', 'View All'); ?></a>
                 </div>
                 <div class="card-body p-0">
                   <div class="list-group list-group-flush" id="candidate-cards-container">
@@ -240,7 +248,7 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                             </div>
                             <div class="mt-1">
                               <a href="<?php echo base_url(); ?>candidate/detail/<?php echo $c->id; ?>" class="small font-weight-600 text-info">
-                                <i class="fas fa-info-circle mr-1"></i> Visi &amp; Misi
+                                <i class="fas fa-info-circle mr-1"></i> <?php echo __t('vision_mission', 'Vision & Mission'); ?>
                               </a>
                             </div>
                           </div>
@@ -255,6 +263,45 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                 </div>
               </div>
             </div>
+          <!-- WebSocket Real-Time Stream Engine Card -->
+          <div class="row">
+            <div class="col-12">
+              <div class="card shadow-sm border" style="border-left: 5px solid #6777ef !important;">
+                <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+                  <h4 class="mb-0">
+                    <i class="fas fa-satellite-dish mr-2 text-primary"></i> <?php echo __t('ws_stream_card_title', 'WebSocket Real-Time Stream Engine'); ?>
+                  </h4>
+                  <div>
+                    <span class="badge badge-primary px-3 py-1 font-weight-bold mr-2">
+                      <i class="fas fa-microchip mr-1"></i> <?php echo __t('ws_engine_badge', 'RFC 6455 Native Engine'); ?>
+                    </span>
+                    <span id="ws-panel-badge" class="badge badge-success px-3 py-1 font-weight-bold">
+                      <i class="fas fa-bolt mr-1"></i> <span id="ws-panel-text"><?php echo __t('ws_connected', 'WebSocket: Live Push'); ?></span>
+                    </span>
+                  </div>
+                </div>
+                <div class="card-body py-3">
+                  <div class="row align-items-center">
+                    <div class="col-md-3 col-6 mb-2">
+                      <small class="text-muted d-block text-uppercase font-weight-bold"><?php echo __t('ws_server_url', 'Server URL'); ?>:</small>
+                      <code class="text-primary font-weight-bold" id="ws-panel-url">ws://localhost:8088</code>
+                    </div>
+                    <div class="col-md-3 col-6 mb-2">
+                      <small class="text-muted d-block text-uppercase font-weight-bold"><?php echo __t('ws_mode', 'Broadcast Mode'); ?>:</small>
+                      <strong class="text-dark"><i class="fas fa-sync-alt mr-1 text-success"></i> Real-Time Event Push</strong>
+                    </div>
+                    <div class="col-md-3 col-6 mb-2">
+                      <small class="text-muted d-block text-uppercase font-weight-bold"><?php echo __t('ws_last_event', 'Last Broadcast Event'); ?>:</small>
+                      <span class="font-weight-bold text-dark" id="ws-last-event-time"><?php echo date('H:i:s'); ?></span>
+                    </div>
+                    <div class="col-md-3 col-6 mb-2 text-md-right">
+                      <small class="text-muted d-block text-uppercase font-weight-bold">Packets Received:</small>
+                      <span class="badge badge-dark font-weight-bold px-3 py-1" id="ws-packet-counter" style="font-size: 13px;">0 packets</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Recent Votes Table -->
@@ -262,9 +309,9 @@ $this->load->view('dist/_partials/header', array('title' => $title));
             <div class="col-12">
               <div class="card shadow-sm">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                  <h4><i class="fas fa-history mr-2 text-primary"></i> <?php echo __t('recent_votes_title', 'Log Suara Masuk Terbaru'); ?></h4>
+                  <h4><i class="fas fa-history mr-2 text-primary"></i> <?php echo __t('recent_votes_title', 'Latest Incoming Votes Log'); ?></h4>
                   <?php if ($this->session->userdata('role') === 'admin'): ?>
-                    <a href="<?php echo base_url(); ?>voter" class="btn btn-sm btn-primary"><?php echo __t('menu_voters', 'Lihat Data Pemilih'); ?></a>
+                    <a href="<?php echo base_url(); ?>voter" class="btn btn-sm btn-primary"><?php echo __t('menu_voters', 'Voters Registry (DPT)'); ?></a>
                   <?php endif; ?>
                 </div>
                 <div class="card-body p-0">
@@ -272,13 +319,13 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                     <table class="table table-striped table-hover mb-0">
                       <thead>
                         <tr>
-                          <th>#</th>
-                          <th>Waktu Vote</th>
-                          <th>Kode Pemilih</th>
-                          <th>Nama Pemilih</th>
-                          <th>Kelas / Jurusan</th>
-                          <th>Pilihan Paslon</th>
-                          <th>Status</th>
+                          <th><?php echo __t('th_no', '#'); ?></th>
+                          <th><?php echo __t('th_time', 'Vote Time'); ?></th>
+                          <th><?php echo __t('th_voter_code', 'Voter Code'); ?></th>
+                          <th><?php echo __t('th_voter_name', 'Voter Name'); ?></th>
+                          <th><?php echo __t('th_dept', 'Class / Department'); ?></th>
+                          <th><?php echo __t('th_candidate_choice', 'Candidate Choice'); ?></th>
+                          <th><?php echo __t('th_status', 'Status'); ?></th>
                         </tr>
                       </thead>
                       <tbody id="recent-votes-tbody">
@@ -286,21 +333,21 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                           <?php $no = 1; foreach ($recent_votes as $rv): ?>
                             <tr data-vote-id="<?php echo $rv->id; ?>">
                               <td><?php echo $no++; ?></td>
-                              <td><i class="far fa-clock text-muted mr-1"></i> <?php echo date('d M Y, H:i', strtotime($rv->voted_at)); ?> WIB</td>
+                              <td><i class="far fa-clock text-muted mr-1"></i> <?php echo date('d M Y, H:i', strtotime($rv->voted_at)); ?></td>
                               <td><span class="badge badge-light border font-weight-bold"><?php echo $rv->voter_code; ?></span></td>
                               <td class="font-weight-bold text-dark"><?php echo $rv->voter_name; ?></td>
                               <td><?php echo $rv->class_or_dept; ?></td>
                               <td>
                                 <span class="badge text-white font-weight-bold" style="background-color: <?php echo $rv->color ?: '#6777ef'; ?>;">
-                                  Paslon #<?php echo $rv->candidate_number; ?>: <?php echo $rv->chairman_name; ?>
+                                  <?php echo __t('candidate_pair', 'Pair'); ?> #<?php echo $rv->candidate_number; ?>: <?php echo $rv->chairman_name; ?>
                                 </span>
                               </td>
-                              <td><span class="badge badge-success"><i class="fas fa-check-circle mr-1"></i> Terverifikasi</span></td>
+                              <td><span class="badge badge-success"><i class="fas fa-check-circle mr-1"></i> <?php echo __t('verified', 'Verified'); ?></span></td>
                             </tr>
                           <?php endforeach; ?>
                         <?php else: ?>
                           <tr id="empty-recent-row">
-                            <td colspan="7" class="text-center text-muted py-4">Belum ada aktivitas suara yang masuk.</td>
+                            <td colspan="7" class="text-center text-muted py-4"><?php echo __t('no_recent_votes', 'No vote activity recorded yet.'); ?></td>
                           </tr>
                         <?php endif; ?>
                       </tbody>
@@ -368,7 +415,7 @@ $(document).ready(function() {
       data: {
         labels: labels,
         datasets: [{
-          label: 'Jumlah Suara',
+          label: '<?php echo addslashes(__t("total_votes_label", "Total Votes")); ?>',
           data: data,
           backgroundColor: colors,
           borderWidth: 1,
@@ -398,7 +445,7 @@ $(document).ready(function() {
   <?php if ($total_voted > 0): ?>
     var initLabels = [
       <?php foreach ($candidates as $c): ?>
-        "Paslon #<?php echo $c->candidate_number; ?> (<?php echo addslashes($c->chairman_name); ?>)",
+        "<?php echo addslashes(__t('candidate_pair', 'Pair')); ?> #<?php echo $c->candidate_number; ?> (<?php echo addslashes($c->chairman_name); ?>)",
       <?php endforeach; ?>
     ];
     var initVotes = [
@@ -421,7 +468,7 @@ $(document).ready(function() {
     $('#stat-total-voted').text(res.total_voted);
     $('#stat-total-unvoted').text(res.total_unvoted);
     $('#stat-participation-rate').text(res.participation_rate + '%');
-    $('#badge-chart-voted').text(res.total_voted + ' Suara Masuk');
+    $('#badge-chart-voted').text(res.total_voted + ' ' + '<?php echo addslashes(__t("stat_voted", "Ballots Cast")); ?>');
     $('#last-update-time').text(res.server_time);
 
     // 2. Update or Build Chart
@@ -430,7 +477,7 @@ $(document).ready(function() {
     var colors = [];
 
     res.candidates.forEach(function(c) {
-      labels.push("Paslon #" + c.candidate_number + " (" + c.chairman_name + ")");
+      labels.push("<?php echo addslashes(__t('candidate_pair', 'Pair')); ?> #" + c.candidate_number + " (" + c.chairman_name + ")");
       votes.push(c.total_votes);
       colors.push(c.color);
     });
@@ -452,7 +499,7 @@ $(document).ready(function() {
     res.candidates.forEach(function(c) {
       // Progress Bar
       $('#progress-bar-' + c.id).css('width', c.percentage + '%').attr('aria-valuenow', c.percentage);
-      $('#progress-text-' + c.id).text(c.total_votes + ' suara (' + c.percentage + '%)');
+      $('#progress-text-' + c.id).text(c.total_votes + ' <?php echo addslashes(__t("votes", "votes")); ?> (' + c.percentage + '%)');
 
       // Quick Card
       $('#cand-vote-score-' + c.id).text(c.total_votes);
@@ -474,8 +521,8 @@ $(document).ready(function() {
         rowsHtml += '<td><span class="badge badge-light border font-weight-bold">' + rv.voter_code + '</span></td>';
         rowsHtml += '<td class="font-weight-bold text-dark">' + rv.voter_name + '</td>';
         rowsHtml += '<td>' + rv.class_or_dept + '</td>';
-        rowsHtml += '<td><span class="badge text-white font-weight-bold" style="background-color: ' + rv.color + ';">Paslon #' + rv.candidate_number + ': ' + rv.chairman_name + '</span></td>';
-        rowsHtml += '<td><span class="badge badge-success"><i class="fas fa-check-circle mr-1"></i> Terverifikasi</span></td>';
+        rowsHtml += '<td><span class="badge text-white font-weight-bold" style="background-color: ' + rv.color + ';"><?php echo addslashes(__t("candidate_pair", "Pair")); ?> #' + rv.candidate_number + ': ' + rv.chairman_name + '</span></td>';
+        rowsHtml += '<td><span class="badge badge-success"><i class="fas fa-check-circle mr-1"></i> <?php echo addslashes(__t("verified", "Verified")); ?></span></td>';
         rowsHtml += '</tr>';
       });
 
@@ -501,7 +548,7 @@ $(document).ready(function() {
         }
       },
       error: function() {
-        console.warn('Live count: Gagal memuat data polling.');
+        console.warn('Live count polling failed.');
       },
       complete: function() {
         if (isManual) {
@@ -539,18 +586,18 @@ $(document).ready(function() {
     if (isLiveActive) {
       $('#live-indicator-badge').removeClass('badge-warning').addClass('badge-success');
       $('#live-pulse').removeClass('live-paused-dot').addClass('live-pulse-dot');
-      $('#live-status-text').text('LIVE COUNT ON');
+      $('#live-status-text').text('<?php echo addslashes(__t("live_count_on", "LIVE COUNT ON")); ?>');
       $('#live-timer-text').show();
       $('#btn-toggle-icon').removeClass('fa-play').addClass('fa-pause');
-      $('#btn-toggle-text').text('Jeda');
+      $('#btn-toggle-text').text('<?php echo addslashes(__t("btn_pause", "Pause")); ?>');
       fetchLiveStats(true);
     } else {
       $('#live-indicator-badge').removeClass('badge-success').addClass('badge-warning');
       $('#live-pulse').removeClass('live-pulse-dot').addClass('live-paused-dot');
-      $('#live-status-text').text('LIVE DIJEDA');
+      $('#live-status-text').text('<?php echo addslashes(__t("live_count_paused", "LIVE PAUSED")); ?>');
       $('#live-timer-text').hide();
       $('#btn-toggle-icon').removeClass('fa-pause').addClass('fa-play');
-      $('#btn-toggle-text').text('Lanjutkan');
+      $('#btn-toggle-text').text('<?php echo addslashes(__t("btn_resume", "Resume")); ?>');
     }
   });
 
@@ -558,5 +605,81 @@ $(document).ready(function() {
   $('#btn-manual-refresh').on('click', function() {
     fetchLiveStats(true);
   });
+
+  // =========================================================================
+  // WEBSOCKET REAL-TIME CLIENT (RFC 6455)
+  // =========================================================================
+  var ws = null;
+  var wsReconnectTimer = null;
+  var wsPacketCount = 0;
+  var wsHost = window.location.hostname || 'localhost';
+  var wsUrl = 'ws://' + wsHost + ':8088';
+
+  $('#ws-panel-url').text(wsUrl);
+
+  function initDashboardWebSocket() {
+    try {
+      ws = new WebSocket(wsUrl);
+
+      ws.onopen = function() {
+        $('#ws-indicator-badge').removeClass('badge-light badge-info badge-danger').addClass('badge-success');
+        $('#ws-indicator-text').text('<?php echo addslashes(__t("ws_connected", "WebSocket: Live Push")); ?>');
+        $('#ws-panel-badge').removeClass('badge-secondary badge-info badge-danger').addClass('badge-success');
+        $('#ws-panel-text').text('<?php echo addslashes(__t("ws_connected", "WebSocket: Live Push")); ?>');
+      };
+
+      ws.onmessage = function(event) {
+        if (!isLiveActive) return;
+
+        try {
+          var data = JSON.parse(event.data);
+          if (data && (data.type === 'live_stats' || data.candidates)) {
+            wsPacketCount++;
+            $('#ws-packet-counter').text(wsPacketCount + ' packets');
+            var now = new Date();
+            var timeStr = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2) + ':' + ('0' + now.getSeconds()).slice(-2);
+            $('#ws-last-event-time').text(timeStr);
+
+            if (data.recent_votes) {
+              data.recent_votes.forEach(function(rv) {
+                if (!rv.formatted_time && rv.voted_at) {
+                  rv.formatted_time = rv.voted_at;
+                }
+              });
+            }
+
+            updateDashboardUI(data);
+          }
+        } catch (err) {}
+      };
+
+      ws.onclose = function() {
+        handleWsDisconnect();
+      };
+
+      ws.onerror = function() {
+        handleWsDisconnect();
+      };
+    } catch (e) {
+      handleWsDisconnect();
+    }
+  }
+
+  function handleWsDisconnect() {
+    $('#ws-indicator-badge').removeClass('badge-success badge-danger').addClass('badge-info');
+    $('#ws-indicator-text').text('<?php echo addslashes(__t("ws_polling_fallback", "Polling Fallback (Active)")); ?>');
+    $('#ws-panel-badge').removeClass('badge-success badge-danger').addClass('badge-info');
+    $('#ws-panel-text').text('<?php echo addslashes(__t("ws_polling_fallback", "Polling Fallback (Active)")); ?>');
+
+    if (!wsReconnectTimer) {
+      wsReconnectTimer = setTimeout(function() {
+        wsReconnectTimer = null;
+        initDashboardWebSocket();
+      }, 10000);
+    }
+  }
+
+  // Initialize WebSocket connection
+  initDashboardWebSocket();
 });
 </script>

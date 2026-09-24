@@ -81,6 +81,13 @@ class Vote extends MY_Controller {
 		$success = $this->Vote_model->cast_vote($voter_id, $candidate_id, $this->input->ip_address());
 
 		if ($success) {
+			// Instant trigger to WebSocket server (if running)
+			$ws_sock = @fsockopen('127.0.0.1', 8088, $errno, $errstr, 0.2);
+			if ($ws_sock) {
+				@fwrite($ws_sock, "TRIGGER\r\n");
+				@fclose($ws_sock);
+			}
+
 			$this->session->set_flashdata('vote_success', array(
 				'voter_name'       => $voter->name,
 				'voter_code'       => $voter->voter_code,

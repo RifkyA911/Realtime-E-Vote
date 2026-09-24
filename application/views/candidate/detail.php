@@ -9,11 +9,11 @@ $this->load->view('dist/_partials/header', array('title' => $title));
             <div class="section-header-back">
               <a href="<?php echo base_url(); ?>candidate" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
-            <h1>Profil Lengkap Pasangan Calon</h1>
+            <h1><?php echo __t('candidate_profile_title', 'Candidate Profile'); ?></h1>
             <div class="section-header-breadcrumb">
-              <div class="breadcrumb-item"><a href="<?php echo base_url(); ?>">Home</a></div>
-              <div class="breadcrumb-item"><a href="<?php echo base_url(); ?>candidate">Kandidat</a></div>
-              <div class="breadcrumb-item active">Detail</div>
+              <div class="breadcrumb-item"><a href="<?php echo base_url(); ?>"><?php echo __t('home', 'Home'); ?></a></div>
+              <div class="breadcrumb-item"><a href="<?php echo base_url(); ?>candidate"><?php echo __t('menu_candidates', 'Candidates'); ?></a></div>
+              <div class="breadcrumb-item active"><?php echo __t('detail', 'Details'); ?></div>
             </div>
           </div>
 
@@ -22,7 +22,7 @@ $this->load->view('dist/_partials/header', array('title' => $title));
               <div class="card card-primary text-center">
                 <div class="card-header justify-content-center">
                   <span class="badge badge-pill text-white px-3 py-2 font-weight-bold" style="background-color: <?php echo $candidate->color ?: '#6777ef'; ?>; font-size: 15px;">
-                    PASLON NO. URUT 0<?php echo $candidate->candidate_number; ?>
+                    <?php echo __t('ballot_no_upper', 'BALLOT NO.'); ?> 0<?php echo $candidate->candidate_number; ?>
                   </span>
                 </div>
                 <div class="card-body">
@@ -33,21 +33,21 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                   <img src="<?php echo $photo_src; ?>" alt="Foto" class="rounded-circle shadow mb-3" style="width: 140px; height: 140px; object-fit: cover; border: 4px solid #fff;">
                   
                   <h4 class="font-weight-bold mb-1 text-dark"><?php echo $candidate->chairman_name; ?></h4>
-                  <div class="text-primary font-weight-bold mb-2">Calon Ketua</div>
+                  <div class="text-primary font-weight-bold mb-2"><?php echo __t('chairman', 'Chairman Candidate'); ?></div>
 
                   <div class="border-top pt-2 mt-2">
                     <h5 class="font-weight-bold mb-1 text-dark"><?php echo $candidate->vice_chairman_name; ?></h5>
-                    <div class="text-muted small">Calon Wakil Ketua</div>
+                    <div class="text-muted small"><?php echo __t('vice_chairman', 'Vice Chairman Candidate'); ?></div>
                   </div>
 
                   <div class="mt-4 pt-3 border-top">
                     <?php if ($this->session->userdata('role') === 'admin'): ?>
                       <a href="<?php echo base_url(); ?>candidate/edit/<?php echo $candidate->id; ?>" class="btn btn-warning btn-sm mr-1">
-                        <i class="fas fa-edit mr-1"></i> Edit Paslon
+                        <i class="fas fa-edit mr-1"></i> <?php echo __t('edit', 'Edit'); ?>
                       </a>
                     <?php endif; ?>
                     <a href="<?php echo base_url(); ?>vote" class="btn btn-primary btn-sm">
-                      <i class="fas fa-vote-yea mr-1"></i> Coblos Paslon Ini
+                      <i class="fas fa-vote-yea mr-1"></i> <?php echo __t('btn_vote_this', 'VOTE PAIR'); ?>
                     </a>
                   </div>
                 </div>
@@ -58,7 +58,7 @@ $this->load->view('dist/_partials/header', array('title' => $title));
               <!-- Vision Card -->
               <div class="card">
                 <div class="card-header">
-                  <h4><i class="fas fa-bullseye text-primary mr-2"></i> Visi Pasangan Calon</h4>
+                  <h4><i class="fas fa-bullseye text-primary mr-2"></i> <?php echo __t('vision', 'Vision'); ?></h4>
                 </div>
                 <div class="card-body">
                   <blockquote class="blockquote mb-0 p-3 bg-light rounded" style="border-left: 5px solid <?php echo $candidate->color ?: '#6777ef'; ?>;">
@@ -72,7 +72,7 @@ $this->load->view('dist/_partials/header', array('title' => $title));
               <!-- Mission Card -->
               <div class="card">
                 <div class="card-header">
-                  <h4><i class="fas fa-tasks text-success mr-2"></i> Misi &amp; Program Kerja</h4>
+                  <h4><i class="fas fa-tasks text-success mr-2"></i> <?php echo __t('mission', 'Mission'); ?></h4>
                 </div>
                 <div class="card-body">
                   <div style="font-size: 15px; line-height: 1.8;" class="text-dark">

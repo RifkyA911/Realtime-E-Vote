@@ -6,13 +6,13 @@ $this->load->view('dist/_partials/header', array('title' => $title));
       <div class="main-content">
         <section class="section">
           <div class="section-header d-flex justify-content-between">
-            <h1><i class="fas fa-address-book mr-2 text-primary"></i> <?php echo __t('voter_list', 'Data Pemilih Tetap (DPT)'); ?></h1>
+            <h1><i class="fas fa-address-book mr-2 text-primary"></i> <?php echo __t('voter_registry', 'Registered Voters (DPT)'); ?></h1>
             <div class="section-header-breadcrumb">
               <a href="<?php echo base_url(); ?>voter/create" class="btn btn-primary btn-icon icon-left mr-2">
-                <i class="fas fa-user-plus"></i> <?php echo __t('add_voter', 'Tambah Pemilih Baru'); ?>
+                <i class="fas fa-user-plus"></i> <?php echo __t('add_voter_title', 'Add New Voter (DPT)'); ?>
               </a>
-              <a href="<?php echo base_url(); ?>voter/reset_all" class="btn btn-outline-danger btn-icon icon-left" onclick="return confirm('<?php echo addslashes(__t('confirm_reset_votes', 'PERINGATAN: Ini akan mereset status memilih SEMUA pemilih dan mengosongkan suara yang sudah masuk. Lanjutkan?')); ?>');">
-                <i class="fas fa-undo"></i> <?php echo __t('reset_all', 'Reset Semua Suara'); ?>
+              <a href="<?php echo base_url(); ?>voter/reset_all" class="btn btn-outline-danger btn-icon icon-left" onclick="return confirm('<?php echo addslashes(__t('confirm_reset_all', 'WARNING: This will reset voting status for ALL voters and clear all cast ballots. Proceed?')); ?>');">
+                <i class="fas fa-undo"></i> <?php echo __t('reset_all_votes', 'Reset All Votes'); ?>
               </a>
             </div>
           </div>
@@ -45,7 +45,7 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4>Total Pemilih (DPT)</h4>
+                    <h4><?php echo __t('stat_total_voters', 'Total Registered Voters'); ?></h4>
                   </div>
                   <div class="card-body">
                     <?php echo number_format($total_voters); ?>
@@ -61,7 +61,7 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4>Sudah Memberi Suara</h4>
+                    <h4><?php echo __t('stat_voted_count', 'Voters Who Voted'); ?></h4>
                   </div>
                   <div class="card-body">
                     <?php echo number_format($total_voted); ?>
@@ -77,7 +77,7 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4>Belum Memberi Suara</h4>
+                    <h4><?php echo __t('stat_unvoted_count', 'Voters Not Voted'); ?></h4>
                   </div>
                   <div class="card-body">
                     <?php echo number_format($total_unvoted); ?>
@@ -92,7 +92,7 @@ $this->load->view('dist/_partials/header', array('title' => $title));
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h4><i class="fas fa-list mr-2 text-primary"></i> Daftar Pemilih Terdaftar</h4>
+                  <h4><i class="fas fa-list mr-2 text-primary"></i> <?php echo __t('registered_voters_list', 'Registered Voters List'); ?></h4>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -100,14 +100,14 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                       <thead>
                         <tr>
                           <th style="width: 40px;">#</th>
-                          <th>Kode / NIM / NIS</th>
-                          <th>UID Kartu (RFID)</th>
-                          <th>Nama Lengkap</th>
-                          <th>L/P</th>
-                          <th>Kelas / Jurusan</th>
-                          <th>Status Memilih</th>
-                          <th>Waktu Mencoblos</th>
-                          <th style="width: 150px;">Aksi</th>
+                          <th><?php echo __t('voter_code', 'Voter Code / Student ID'); ?></th>
+                          <th><?php echo __t('card_uid', 'Card UID (RFID / NFC)'); ?></th>
+                          <th><?php echo __t('voter_name', 'Full Name'); ?></th>
+                          <th><?php echo __t('gender', 'Gender'); ?></th>
+                          <th><?php echo __t('class_or_dept', 'Class / Major / Unit'); ?></th>
+                          <th><?php echo __t('status', 'Status'); ?></th>
+                          <th><?php echo __t('vote_time', 'Vote Timestamp'); ?></th>
+                          <th style="width: 150px;"><?php echo __t('action', 'Action'); ?></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -126,17 +126,17 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                               <td class="font-weight-bold text-dark"><?php echo $v->name; ?></td>
                               <td>
                                 <?php if ($v->gender == 'L'): ?>
-                                  <span class="badge badge-info"><i class="fas fa-mars mr-1"></i> L</span>
+                                  <span class="badge badge-info"><i class="fas fa-mars mr-1"></i> M</span>
                                 <?php else: ?>
-                                  <span class="badge badge-danger"><i class="fas fa-venus mr-1"></i> P</span>
+                                  <span class="badge badge-danger"><i class="fas fa-venus mr-1"></i> F</span>
                                 <?php endif; ?>
                               </td>
                               <td><?php echo $v->class_or_dept; ?></td>
                               <td>
                                 <?php if ($v->has_voted == 1): ?>
-                                  <span class="badge badge-success"><i class="fas fa-check mr-1"></i> Sudah Memilih</span>
+                                  <span class="badge badge-success"><i class="fas fa-check mr-1"></i> <?php echo __t('status_has_voted', 'Has Voted'); ?></span>
                                 <?php else: ?>
-                                  <span class="badge badge-warning"><i class="fas fa-hourglass-half mr-1"></i> Belum Memilih</span>
+                                  <span class="badge badge-warning"><i class="fas fa-hourglass-half mr-1"></i> <?php echo __t('status_not_voted', 'Not Voted'); ?></span>
                                 <?php endif; ?>
                               </td>
                               <td>
@@ -149,18 +149,18 @@ $this->load->view('dist/_partials/header', array('title' => $title));
                               <td>
                                 <div class="btn-group" role="group">
                                   <?php if ($v->has_voted == 1): ?>
-                                    <a href="<?php echo base_url(); ?>voter/reset_status/<?php echo $v->id; ?>" class="btn btn-sm btn-outline-warning" title="Reset Status Memilih" onclick="return confirm('Reset status memilih untuk <?php echo $v->name; ?>?');">
+                                    <a href="<?php echo base_url(); ?>voter/reset_status/<?php echo $v->id; ?>" class="btn btn-sm btn-outline-warning" title="<?php echo __t('reset_vote_status', 'Reset Voting Status'); ?>" onclick="return confirm('<?php echo sprintf(__t('confirm_reset_status', 'Reset voting status for %s?'), addslashes($v->name)); ?>');">
                                       <i class="fas fa-redo"></i>
                                     </a>
                                   <?php else: ?>
-                                    <a href="<?php echo base_url(); ?>vote?code=<?php echo $v->voter_code; ?>" class="btn btn-sm btn-outline-success" title="Coblos Sekarang">
+                                    <a href="<?php echo base_url(); ?>vote?code=<?php echo $v->voter_code; ?>" class="btn btn-sm btn-outline-success" title="<?php echo __t('vote_now', 'Vote Now'); ?>">
                                       <i class="fas fa-vote-yea"></i>
                                     </a>
                                   <?php endif; ?>
-                                  <a href="<?php echo base_url(); ?>voter/edit/<?php echo $v->id; ?>" class="btn btn-sm btn-outline-primary" title="Edit">
+                                  <a href="<?php echo base_url(); ?>voter/edit/<?php echo $v->id; ?>" class="btn btn-sm btn-outline-primary" title="<?php echo __t('edit', 'Edit'); ?>">
                                     <i class="fas fa-edit"></i>
                                   </a>
-                                  <a href="<?php echo base_url(); ?>voter/delete/<?php echo $v->id; ?>" class="btn btn-sm btn-outline-danger" title="Hapus" onclick="return confirm('Hapus pemilih <?php echo $v->name; ?>?');">
+                                  <a href="<?php echo base_url(); ?>voter/delete/<?php echo $v->id; ?>" class="btn btn-sm btn-outline-danger" title="<?php echo __t('delete', 'Delete'); ?>" onclick="return confirm('<?php echo sprintf(__t('confirm_delete_voter', 'Delete voter %s?'), addslashes($v->name)); ?>');">
                                     <i class="fas fa-trash"></i>
                                   </a>
                                 </div>
@@ -187,17 +187,17 @@ $(document).ready(function() {
     $('#table-voters').DataTable({
       "pageLength": 10,
       "language": {
-        "search": "Cari Pemilih:",
-        "lengthMenu": "Tampilkan _MENU_ data per halaman",
-        "zeroRecords": "Tidak ada data pemilih yang sesuai",
-        "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ pemilih",
-        "infoEmpty": "Menampilkan 0 sampai 0 dari 0 pemilih",
-        "infoFiltered": "(disaring dari _MAX_ total data)",
+        "search": "<?php echo __t('search_voters', 'Search Voters:'); ?>",
+        "lengthMenu": "<?php echo __t('show_entries', 'Show _MENU_ entries per page'); ?>",
+        "zeroRecords": "<?php echo __t('zero_records', 'No matching voter records found'); ?>",
+        "info": "<?php echo __t('info_showing', 'Showing _START_ to _END_ of _TOTAL_ voters'); ?>",
+        "infoEmpty": "<?php echo __t('info_empty', 'Showing 0 to 0 of 0 voters'); ?>",
+        "infoFiltered": "<?php echo __t('info_filtered', '(filtered from _MAX_ total records)'); ?>",
         "paginate": {
-          "first": "Awal",
-          "last": "Akhir",
-          "next": "Berikutnya",
-          "previous": "Sebelumnya"
+          "first": "<?php echo __t('first', 'First'); ?>",
+          "last": "<?php echo __t('last', 'Last'); ?>",
+          "next": "<?php echo __t('next', 'Next'); ?>",
+          "previous": "<?php echo __t('previous', 'Previous'); ?>"
         }
       }
     });

@@ -9,11 +9,11 @@ $this->load->view('dist/_partials/header', array('title' => $title));
             <div class="section-header-back">
               <a href="<?php echo base_url(); ?>candidate" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
-            <h1>Tambah Pasangan Calon Baru</h1>
+            <h1><?php echo __t('add_candidate_title', 'Add New Candidate Pair'); ?></h1>
             <div class="section-header-breadcrumb">
-              <div class="breadcrumb-item"><a href="<?php echo base_url(); ?>">Home</a></div>
-              <div class="breadcrumb-item"><a href="<?php echo base_url(); ?>candidate">Kandidat</a></div>
-              <div class="breadcrumb-item active">Tambah</div>
+              <div class="breadcrumb-item"><a href="<?php echo base_url(); ?>"><?php echo __t('home', 'Home'); ?></a></div>
+              <div class="breadcrumb-item"><a href="<?php echo base_url(); ?>candidate"><?php echo __t('menu_candidates', 'Candidates'); ?></a></div>
+              <div class="breadcrumb-item active"><?php echo __t('add', 'Add'); ?></div>
             </div>
           </div>
 
@@ -40,63 +40,63 @@ $this->load->view('dist/_partials/header', array('title' => $title));
             <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
               <div class="card card-primary">
                 <div class="card-header">
-                  <h4><i class="fas fa-user-plus mr-2 text-primary"></i> Formulir Pendaftaran Pasangan Calon</h4>
+                  <h4><i class="fas fa-user-plus mr-2 text-primary"></i> <?php echo __t('candidate_form', 'Candidate Registration Form'); ?></h4>
                 </div>
                 <div class="card-body">
                   <?php echo form_open_multipart('candidate/store'); ?>
 
                     <div class="row">
                       <div class="form-group col-md-4">
-                        <label for="candidate_number">Nomor Urut <span class="text-danger">*</span></label>
+                        <label for="candidate_number"><?php echo __t('ballot_number', 'Ballot Number'); ?> <span class="text-danger">*</span></label>
                         <input type="number" id="candidate_number" name="candidate_number" class="form-control" min="1" value="<?php echo set_value('candidate_number', $next_number); ?>" required>
-                        <small class="form-text text-muted">Nomor urut resmi pasangan calon.</small>
+                        <small class="form-text text-muted"><?php echo __t('official_ballot_no', 'Official ballot number.'); ?></small>
                       </div>
 
                       <div class="form-group col-md-4">
-                        <label for="color">Warna Identitas Paslon</label>
+                        <label for="color"><?php echo __t('theme_color', 'Theme Color'); ?></label>
                         <input type="color" id="color" name="color" class="form-control" style="height: 42px; padding: 2px;" value="<?php echo set_value('color', '#6777ef'); ?>">
-                        <small class="form-text text-muted">Warna badge & grafik chart.</small>
+                        <small class="form-text text-muted"><?php echo __t('color_badge_desc', 'Theme color for badge and chart.'); ?></small>
                       </div>
 
                       <div class="form-group col-md-4">
-                        <label for="photo">Foto Paslon (Opsional)</label>
+                        <label for="photo"><?php echo __t('photo', 'Candidate Photo'); ?> (<?php echo __t('optional', 'Optional'); ?>)</label>
                         <input type="file" id="photo" name="photo" class="form-control-file mt-1" accept="image/*" onchange="previewImage(this)">
-                        <small class="form-text text-muted">Format: JPG/PNG, maks 3MB.</small>
+                        <small class="form-text text-muted"><?php echo __t('photo_desc', 'Format: JPG/PNG, max 3MB.'); ?></small>
                       </div>
                     </div>
 
                     <div class="row">
                       <div class="form-group col-md-6">
-                        <label for="chairman_name">Nama Calon Ketua <span class="text-danger">*</span></label>
-                        <input type="text" id="chairman_name" name="chairman_name" class="form-control" placeholder="Contoh: Muhammad Arya Pratama" value="<?php echo set_value('chairman_name'); ?>" required>
+                        <label for="chairman_name"><?php echo __t('chairman', 'Chairman Candidate'); ?> <span class="text-danger">*</span></label>
+                        <input type="text" id="chairman_name" name="chairman_name" class="form-control" placeholder="<?php echo __t('example_chairman_name', 'e.g., Alex Johnson'); ?>" value="<?php echo set_value('chairman_name'); ?>" required>
                       </div>
 
                       <div class="form-group col-md-6">
-                        <label for="vice_chairman_name">Nama Calon Wakil Ketua <span class="text-danger">*</span></label>
-                        <input type="text" id="vice_chairman_name" name="vice_chairman_name" class="form-control" placeholder="Contoh: Nadia Salsabila" value="<?php echo set_value('vice_chairman_name'); ?>" required>
+                        <label for="vice_chairman_name"><?php echo __t('vice_chairman', 'Vice Chairman Candidate'); ?> <span class="text-danger">*</span></label>
+                        <input type="text" id="vice_chairman_name" name="vice_chairman_name" class="form-control" placeholder="<?php echo __t('example_vice_chairman_name', 'e.g., Sarah Williams'); ?>" value="<?php echo set_value('vice_chairman_name'); ?>" required>
                       </div>
                     </div>
 
                     <div class="form-group">
-                      <label for="vision">Visi Pasangan Calon <span class="text-danger">*</span></label>
-                      <textarea id="vision" name="vision" class="form-control" style="height: 100px;" placeholder="Tuliskan gagasan utama atau visi paslon..." required><?php echo set_value('vision'); ?></textarea>
+                      <label for="vision"><?php echo __t('vision', 'Vision'); ?> <span class="text-danger">*</span></label>
+                      <textarea id="vision" name="vision" class="form-control" style="height: 100px;" placeholder="<?php echo __t('placeholder_vision', 'Write down the main ideas or vision...'); ?>" required><?php echo set_value('vision'); ?></textarea>
                     </div>
 
                     <div class="form-group">
-                      <label for="mission">Misi Pasangan Calon <span class="text-danger">*</span></label>
-                      <textarea id="mission" name="mission" class="form-control" style="height: 140px;" placeholder="Tuliskan butir-butir misi paslon (gunakan penomoran atau baris baru)..." required><?php echo set_value('mission'); ?></textarea>
+                      <label for="mission"><?php echo __t('mission', 'Mission'); ?> <span class="text-danger">*</span></label>
+                      <textarea id="mission" name="mission" class="form-control" style="height: 140px;" placeholder="<?php echo __t('placeholder_mission', 'Write down points of mission (use numbered or new lines)...'); ?>" required><?php echo set_value('mission'); ?></textarea>
                     </div>
 
                     <!-- Image Preview Container -->
                     <div id="previewContainer" class="form-group text-center d-none">
-                      <label class="d-block font-weight-bold">Preview Foto Terpilih:</label>
+                      <label class="d-block font-weight-bold"><?php echo __t('preview_photo', 'Selected Photo Preview:'); ?></label>
                       <img id="imgPreview" src="#" alt="Preview" class="img-thumbnail rounded-circle" style="width: 110px; height: 110px; object-fit: cover;">
                     </div>
 
                     <div class="form-group text-right mb-0">
-                      <a href="<?php echo base_url(); ?>candidate" class="btn btn-secondary mr-2">Batal</a>
+                      <a href="<?php echo base_url(); ?>candidate" class="btn btn-secondary mr-2"><?php echo __t('cancel', 'Cancel'); ?></a>
                       <button type="submit" class="btn btn-primary font-weight-bold">
-                        <i class="fas fa-save mr-1"></i> Simpan Kandidat
+                        <i class="fas fa-save mr-1"></i> <?php echo __t('save_candidate', 'Save Candidate'); ?>
                       </button>
                     </div>
 
