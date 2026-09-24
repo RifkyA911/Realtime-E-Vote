@@ -42,21 +42,15 @@ $user_role = $this->session->userdata('role');
               <li class="dropdown <?php echo ($this->uri->segment(1) == 'migrate') ? 'active' : ''; ?>">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-database"></i> <span><?php echo __t('menu_database', 'Database & Seed'); ?></span></a>
                 <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="<?php echo base_url(); ?>migrate/seed" onclick="return confirm('Jalankan migrasi ulang dan reset ke data awal?');">Re-Seed Database</a></li>
-                  <li><a class="nav-link text-warning" href="<?php echo base_url(); ?>migrate/reset" onclick="return confirm('Kosongkan semua suara yang sudah masuk?');">Reset Suara Saja</a></li>
+                  <li><a class="nav-link" href="<?php echo base_url(); ?>migrate/seed" onclick="return confirm('<?php echo addslashes(__t('confirm_reseed', 'Jalankan migrasi ulang dan reset ke data awal?')); ?>');"><?php echo __t('reseed_db', 'Re-Seed Database'); ?></a></li>
+                  <li><a class="nav-link text-warning" href="<?php echo base_url(); ?>migrate/reset" onclick="return confirm('<?php echo addslashes(__t('confirm_reset_votes', 'Kosongkan semua suara yang sudah masuk?')); ?>');"><?php echo __t('reset_votes_only', 'Reset Suara Saja'); ?></a></li>
                 </ul>
               </li>
             <?php endif; ?>
 
-            <li class="<?php echo ($this->uri->segment(1) == 'docs') ? 'active' : ''; ?>">
-              <a class="nav-link" href="<?php echo base_url(); ?>docs" target="_blank">
-                <i class="fas fa-book"></i> <span><?php echo __t('menu_docs', 'Dokumentasi Sistem'); ?></span>
-              </a>
-            </li>
-
             <li class="menu-header"><?php echo __t('menu_account', 'Pengaturan Akun'); ?></li>
             <li>
-              <a class="nav-link text-danger" href="<?php echo base_url(); ?>auth/logout" onclick="return confirm('Apakah Anda yakin ingin logout?');">
+              <a class="nav-link text-danger" href="<?php echo base_url(); ?>auth/logout" onclick="return confirm('<?php echo addslashes(__t('confirm_logout', 'Apakah Anda yakin ingin logout?')); ?>');">
                 <i class="fas fa-sign-out-alt"></i> <span><?php echo __t('menu_logout', 'Logout'); ?></span>
               </a>
             </li>
