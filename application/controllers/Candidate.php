@@ -11,7 +11,7 @@ class Candidate extends MY_Controller {
 
 	public function index() {
 		$data = array(
-			'title'      => 'Data Pasangan Calon (Kandidat)',
+			'title'      => __t('candidate_registry', 'Candidate Pairs Registry'),
 			'candidates' => $this->Candidate_model->get_with_votes_count()
 		);
 		$this->load->view('candidate/index', $data);
@@ -21,7 +21,7 @@ class Candidate extends MY_Controller {
 		$this->require_admin();
 		$next_number = $this->Candidate_model->get_next_number();
 		$data = array(
-			'title'       => 'Tambah Kandidat Baru',
+			'title'       => __t('add_candidate_title', 'Add New Candidate Pair'),
 			'next_number' => $next_number
 		);
 		$this->load->view('candidate/create', $data);
@@ -29,22 +29,22 @@ class Candidate extends MY_Controller {
 
 	public function store() {
 		$this->require_admin();
-		$this->form_validation->set_rules('candidate_number', 'Nomor Urut', 'required|numeric|is_unique[candidates.candidate_number]', array(
-			'required'  => '%s wajib diisi.',
-			'numeric'   => '%s harus berupa angka.',
-			'is_unique' => '%s sudah digunakan oleh pasangan calon lain.'
+		$this->form_validation->set_rules('candidate_number', __t('candidate_number', 'Ballot Number'), 'required|numeric|is_unique[candidates.candidate_number]', array(
+			'required'  => __t('field_required', '%s is required.'),
+			'numeric'   => __t('field_numeric', '%s must be a valid number.'),
+			'is_unique' => __t('field_unique_candidate', '%s is already taken by another candidate.')
 		));
-		$this->form_validation->set_rules('chairman_name', 'Nama Calon Ketua', 'required|trim', array(
-			'required' => '%s wajib diisi.'
+		$this->form_validation->set_rules('chairman_name', __t('chairman', 'Chairman Candidate Name'), 'required|trim', array(
+			'required' => __t('field_required', '%s is required.')
 		));
-		$this->form_validation->set_rules('vice_chairman_name', 'Nama Calon Wakil Ketua', 'required|trim', array(
-			'required' => '%s wajib diisi.'
+		$this->form_validation->set_rules('vice_chairman_name', __t('vice_chairman', 'Vice Chairman Candidate Name'), 'required|trim', array(
+			'required' => __t('field_required', '%s is required.')
 		));
-		$this->form_validation->set_rules('vision', 'Visi', 'required|trim', array(
-			'required' => '%s wajib diisi.'
+		$this->form_validation->set_rules('vision', __t('vision', 'Vision'), 'required|trim', array(
+			'required' => __t('field_required', '%s is required.')
 		));
-		$this->form_validation->set_rules('mission', 'Misi', 'required|trim', array(
-			'required' => '%s wajib diisi.'
+		$this->form_validation->set_rules('mission', __t('mission', 'Mission'), 'required|trim', array(
+			'required' => __t('field_required', '%s is required.')
 		));
 
 		if ($this->form_validation->run() === FALSE) {
@@ -64,7 +64,7 @@ class Candidate extends MY_Controller {
 				$upload_data = $this->upload->data();
 				$photo_filename = $upload_data['file_name'];
 			} else {
-				$this->session->set_flashdata('error', 'Gagal upload foto: ' . $this->upload->display_errors('', ''));
+				$this->session->set_flashdata('error', __t('msg_photo_upload_error', 'Photo upload failed: ') . $this->upload->display_errors('', ''));
 				$this->create();
 				return;
 			}
@@ -84,7 +84,7 @@ class Candidate extends MY_Controller {
 		);
 
 		$this->Candidate_model->insert($payload);
-		$this->session->set_flashdata('success', 'Pasangan calon no. urut ' . $payload['candidate_number'] . ' berhasil ditambahkan!');
+		$this->session->set_flashdata('success', sprintf(__t('msg_candidate_added', 'Candidate pair #%s has been successfully registered!'), $payload['candidate_number']));
 		redirect('candidate');
 	}
 
@@ -92,12 +92,12 @@ class Candidate extends MY_Controller {
 		$this->require_admin();
 		$candidate = $this->Candidate_model->get_by_id($id);
 		if (!$candidate) {
-			$this->session->set_flashdata('error', 'Data kandidat tidak ditemukan.');
+			$this->session->set_flashdata('error', __t('msg_candidate_not_found', 'Candidate record not found.'));
 			redirect('candidate');
 		}
 
 		$data = array(
-			'title'     => 'Edit Data Kandidat',
+			'title'     => __t('edit_candidate_title', 'Edit Candidate Pair'),
 			'candidate' => $candidate
 		);
 		$this->load->view('candidate/edit', $data);
@@ -107,21 +107,21 @@ class Candidate extends MY_Controller {
 		$this->require_admin();
 		$candidate = $this->Candidate_model->get_by_id($id);
 		if (!$candidate) {
-			$this->session->set_flashdata('error', 'Data kandidat tidak ditemukan.');
+			$this->session->set_flashdata('error', __t('msg_candidate_not_found', 'Candidate record not found.'));
 			redirect('candidate');
 		}
 
 		$candidate_number = (int) $this->input->post('candidate_number', TRUE);
 		if ($this->Candidate_model->is_number_exists($candidate_number, $id)) {
-			$this->session->set_flashdata('error', 'Nomor urut ' . $candidate_number . ' sudah dipakai kandidat lain.');
+			$this->session->set_flashdata('error', sprintf(__t('msg_candidate_number_taken', 'Ballot number #%s is already used by another candidate.'), $candidate_number));
 			redirect('candidate/edit/' . $id);
 			return;
 		}
 
-		$this->form_validation->set_rules('chairman_name', 'Nama Calon Ketua', 'required|trim');
-		$this->form_validation->set_rules('vice_chairman_name', 'Nama Calon Wakil Ketua', 'required|trim');
-		$this->form_validation->set_rules('vision', 'Visi', 'required|trim');
-		$this->form_validation->set_rules('mission', 'Misi', 'required|trim');
+		$this->form_validation->set_rules('chairman_name', __t('chairman', 'Chairman Candidate Name'), 'required|trim');
+		$this->form_validation->set_rules('vice_chairman_name', __t('vice_chairman', 'Vice Chairman Candidate Name'), 'required|trim');
+		$this->form_validation->set_rules('vision', __t('vision', 'Vision'), 'required|trim');
+		$this->form_validation->set_rules('mission', __t('mission', 'Mission'), 'required|trim');
 
 		if ($this->form_validation->run() === FALSE) {
 			$this->edit($id);
@@ -144,7 +144,7 @@ class Candidate extends MY_Controller {
 				}
 				$photo_filename = $upload_data['file_name'];
 			} else {
-				$this->session->set_flashdata('error', 'Gagal upload foto: ' . $this->upload->display_errors('', ''));
+				$this->session->set_flashdata('error', __t('msg_photo_upload_error', 'Photo upload failed: ') . $this->upload->display_errors('', ''));
 				redirect('candidate/edit/' . $id);
 				return;
 			}
@@ -161,7 +161,7 @@ class Candidate extends MY_Controller {
 		);
 
 		$this->Candidate_model->update($id, $payload);
-		$this->session->set_flashdata('success', 'Data kandidat berhasil diperbarui!');
+		$this->session->set_flashdata('success', __t('msg_candidate_updated', 'Candidate details updated successfully!'));
 		redirect('candidate');
 	}
 
@@ -169,24 +169,24 @@ class Candidate extends MY_Controller {
 		$this->require_admin();
 		$candidate = $this->Candidate_model->get_by_id($id);
 		if (!$candidate) {
-			$this->session->set_flashdata('error', 'Data kandidat tidak ditemukan.');
+			$this->session->set_flashdata('error', __t('msg_candidate_not_found', 'Candidate record not found.'));
 			redirect('candidate');
 		}
 
 		$this->Candidate_model->delete($id);
-		$this->session->set_flashdata('success', 'Kandidat no. urut ' . $candidate->candidate_number . ' (' . $candidate->chairman_name . ') berhasil dihapus.');
+		$this->session->set_flashdata('success', sprintf(__t('msg_candidate_deleted', 'Candidate #%s (%s) has been successfully deleted.'), $candidate->candidate_number, $candidate->chairman_name));
 		redirect('candidate');
 	}
 
 	public function detail($id) {
 		$candidate = $this->Candidate_model->get_by_id($id);
 		if (!$candidate) {
-			$this->session->set_flashdata('error', 'Data kandidat tidak ditemukan.');
+			$this->session->set_flashdata('error', __t('msg_candidate_not_found', 'Candidate record not found.'));
 			redirect('candidate');
 		}
 
 		$data = array(
-			'title'     => 'Profil Lengkap Kandidat No. ' . $candidate->candidate_number,
+			'title'     => sprintf(__t('candidate_profile_title', 'Candidate Profile #%s &mdash; %s'), $candidate->candidate_number, $candidate->chairman_name),
 			'candidate' => $candidate
 		);
 		$this->load->view('candidate/detail', $data);
