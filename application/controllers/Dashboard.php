@@ -24,7 +24,7 @@ class Dashboard extends MY_Controller {
 		$recent_votes = $this->Vote_model->get_recent_votes(8);
 
 		$data = array(
-			'title'              => 'Dashboard Real Count E-Vote',
+			'title'              => __t('dashboard_title', 'Real-Time Live Count &bull; Simple E-Vote'),
 			'total_voters'       => $total_voters,
 			'total_voted'        => $total_voted,
 			'total_unvoted'      => $total_unvoted,
@@ -132,7 +132,7 @@ class Dashboard extends MY_Controller {
 		$winner = (!empty($ranked_candidates) && $total_voted > 0) ? $ranked_candidates[0] : null;
 
 		$data = array(
-			'title'              => 'Berita Acara & Rekapitulasi Hasil Penghitungan Suara E-Voting',
+			'title'              => __t('print_recap_title', 'Official Election Minutes & Vote Recapitulation'),
 			'doc_number'         => 'BA-EVOTE/' . date('Ymd') . '/001',
 			'total_voters'       => $total_voters,
 			'total_voted'        => $total_voted,
