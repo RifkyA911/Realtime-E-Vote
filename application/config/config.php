@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/stisla-codeigniter/';
+$config['base_url'] = function_exists('env') ? env('BASE_URL', 'http://localhost/e-vote/') : 'http://localhost/e-vote/';
 
 /*
 |--------------------------------------------------------------------------
@@ -324,7 +324,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'evote_ci3_secret_token_secure_key_2026';
 
 /*
 |--------------------------------------------------------------------------

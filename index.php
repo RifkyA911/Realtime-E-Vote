@@ -53,7 +53,63 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+/*
+ *---------------------------------------------------------------
+ * LOAD .ENV CONFIGURATION
+ *---------------------------------------------------------------
+ */
+if (file_exists(__DIR__ . '/.env')) {
+	$env_lines = file(__DIR__ . '/.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+	foreach ($env_lines as $env_line) {
+		$env_line = trim($env_line);
+		if ($env_line === '' || strpos($env_line, '#') === 0) {
+			continue;
+		}
+		if (strpos($env_line, '=') !== false) {
+			list($env_key, $env_val) = explode('=', $env_line, 2);
+			$env_key = trim($env_key);
+			$env_val = trim($env_val);
+			if ((substr($env_val, 0, 1) === '"' && substr($env_val, -1) === '"') ||
+				(substr($env_val, 0, 1) === "'" && substr($env_val, -1) === "'")) {
+				$env_val = substr($env_val, 1, -1);
+			}
+			if (!array_key_exists($env_key, $_SERVER) && !array_key_exists($env_key, $_ENV)) {
+				putenv("{$env_key}={$env_val}");
+				$_ENV[$env_key] = $env_val;
+				$_SERVER[$env_key] = $env_val;
+			}
+		}
+	}
+}
+
+if (!function_exists('env')) {
+	function env($key, $default = null) {
+		$val = getenv($key);
+		if ($val === false) {
+			$val = isset($_ENV[$key]) ? $_ENV[$key] : (isset($_SERVER[$key]) ? $_SERVER[$key] : null);
+		}
+		if ($val === null) {
+			return $default;
+		}
+		switch (strtolower($val)) {
+			case 'true':
+			case '(true)':
+				return true;
+			case 'false':
+			case '(false)':
+				return false;
+			case 'empty':
+			case '(empty)':
+				return '';
+			case 'null':
+			case '(null)':
+				return null;
+		}
+		return $val;
+	}
+}
+
+	define('ENVIRONMENT', env('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development'));
 
 /*
  *---------------------------------------------------------------

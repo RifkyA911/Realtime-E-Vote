@@ -70,23 +70,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
 */
+if (!function_exists('env')) {
+	function env($key, $default = null) {
+		$val = getenv($key);
+		if ($val === false) {
+			$val = isset($_ENV[$key]) ? $_ENV[$key] : (isset($_SERVER[$key]) ? $_SERVER[$key] : null);
+		}
+		return ($val !== null && $val !== false) ? $val : $default;
+	}
+}
+
 $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => '',
-	'password' => '',
-	'database' => '',
+	'hostname' => env('DB_HOST', '127.0.0.1'),
+	'username' => env('DB_USER', 'root'),
+	'password' => env('DB_PASS', ''),
+	'database' => env('DB_NAME', 'e_vote'),
 	'dbdriver' => 'mysqli',
+	'port'     => (int) env('DB_PORT', 3306),
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
 	'cache_on' => FALSE,
 	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
+	'char_set' => 'utf8mb4',
+	'dbcollat' => 'utf8mb4_unicode_ci',
 	'swap_pre' => '',
 	'encrypt' => FALSE,
 	'compress' => FALSE,
