@@ -8,9 +8,9 @@ class MY_Controller extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 
-		// Setup i18n Language (default: 'id')
-		$lang = $this->session->userdata('site_lang') ?: 'id';
-		$folder = ($lang === 'en') ? 'english' : 'indonesian';
+		// Setup i18n Language (default: 'en')
+		$lang = $this->session->userdata('site_lang') ?: 'en';
+		$folder = ($lang === 'id') ? 'indonesian' : 'english';
 		$this->lang->load('app', $folder);
 
 		if ($this->input->is_cli_request()) {
@@ -18,7 +18,7 @@ class MY_Controller extends CI_Controller {
 		}
 
 		if (!$this->session->userdata('logged_in')) {
-			$this->session->set_flashdata('error', 'Silakan login terlebih dahulu untuk mengakses sistem E-Voting.');
+			$this->session->set_flashdata('error', __t('msg_login_required', 'Please sign in to access the E-Voting system.'));
 			redirect('auth/login');
 		}
 
@@ -33,7 +33,7 @@ class MY_Controller extends CI_Controller {
 
 	protected function require_admin() {
 		if ($this->user->role !== 'admin') {
-			$this->session->set_flashdata('error', 'Akses ditolak! Fitur ini hanya dapat diakses oleh Administrator.');
+			$this->session->set_flashdata('error', __t('msg_admin_required', 'Access denied! This feature is restricted to Administrators.'));
 			redirect('dashboard');
 		}
 	}

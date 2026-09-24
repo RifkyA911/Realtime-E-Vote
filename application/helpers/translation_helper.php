@@ -17,11 +17,11 @@ if (!function_exists('__t')) {
 
 if (!function_exists('current_lang')) {
 	/**
-	 * Get active language code ('id' or 'en')
+	 * Get active language code ('en' or 'id')
 	 */
 	function current_lang() {
 		$ci =& get_instance();
-		return $ci->session->userdata('site_lang') ?: 'id';
+		return $ci->session->userdata('site_lang') ?: 'en';
 	}
 }
 
@@ -30,6 +30,6 @@ if (!function_exists('current_lang_name')) {
 	 * Get readable active language name
 	 */
 	function current_lang_name() {
-		return (current_lang() === 'en') ? 'English' : 'Bahasa Indonesia';
+		return (current_lang() === 'id') ? 'Bahasa Indonesia' : 'English';
 	}
 }
