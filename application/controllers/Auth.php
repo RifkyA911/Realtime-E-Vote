@@ -6,9 +6,9 @@ class Auth extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 
-		// Setup i18n Language (default: 'id')
-		$lang = $this->session->userdata('site_lang') ?: 'id';
-		$folder = ($lang === 'en') ? 'english' : 'indonesian';
+		// Setup i18n Language (default: 'en')
+		$lang = $this->session->userdata('site_lang') ?: 'en';
+		$folder = ($lang === 'id') ? 'indonesian' : 'english';
 		$this->lang->load('app', $folder);
 
 		$this->load->model('User_model');
@@ -20,7 +20,7 @@ class Auth extends CI_Controller {
 		}
 
 		$data = array(
-			'title' => 'Login E-Voting'
+			'title' => __t('login_title', 'Sign In to Simple E-Vote')
 		);
 		$this->load->view('auth/login', $data);
 	}
@@ -30,11 +30,11 @@ class Auth extends CI_Controller {
 			redirect('dashboard');
 		}
 
-		$this->form_validation->set_rules('username', 'Username / Kode Pemilih', 'required|trim', array(
-			'required' => '%s wajib diisi.'
+		$this->form_validation->set_rules('username', __t('username', 'Username / Voter Code'), 'required|trim', array(
+			'required' => __t('field_required', '%s is required.')
 		));
-		$this->form_validation->set_rules('password', 'Password', 'required', array(
-			'required' => '%s wajib diisi.'
+		$this->form_validation->set_rules('password', __t('password', 'Password'), 'required', array(
+			'required' => __t('field_required', '%s is required.')
 		));
 
 		if ($this->form_validation->run() === FALSE) {
@@ -58,8 +58,8 @@ class Auth extends CI_Controller {
 			);
 			$this->session->set_userdata($session_data);
 
-			$role_label = ($user->role === 'admin') ? 'Administrator' : 'Pemilih (DPT)';
-			$this->session->set_flashdata('success', 'Selamat datang, ' . $user->name . '! Anda login sebagai ' . $role_label . '.');
+			$role_label = ($user->role === 'admin') ? __t('admin', 'Administrator') : __t('voter', 'Voter (DPT)');
+			$this->session->set_flashdata('success', sprintf(__t('msg_welcome_role', 'Welcome, %s! Signed in as %s.'), $user->name, $role_label));
 
 			if ($user->role === 'voter') {
 				redirect('vote');
@@ -67,7 +67,7 @@ class Auth extends CI_Controller {
 				redirect('dashboard');
 			}
 		} else {
-			$this->session->set_flashdata('error', 'Username atau password tidak sesuai. Silakan periksa kembali!');
+			$this->session->set_flashdata('error', __t('msg_invalid_credentials', 'Invalid username or password. Please verify your credentials!'));
 			redirect('auth/login');
 		}
 	}
@@ -78,7 +78,7 @@ class Auth extends CI_Controller {
 				$redirect_url = ($this->session->userdata('role') === 'voter') ? base_url('vote') : base_url('dashboard');
 				echo json_encode(array(
 					'status'   => 'success',
-					'message'  => 'Anda sudah dalam keadaan login.',
+					'message'  => __t('msg_already_logged_in', 'You are already signed in.'),
 					'redirect' => $redirect_url
 				));
 				return;
@@ -92,11 +92,11 @@ class Auth extends CI_Controller {
 			if ($this->input->is_ajax_request()) {
 				echo json_encode(array(
 					'status'  => 'error',
-					'message' => 'Silakan tempelkan kartu ID / RFID Anda!'
+					'message' => __t('msg_tap_card_prompt', 'Please tap your ID card on the reader!')
 				));
 				return;
 			}
-			$this->session->set_flashdata('error', 'Silakan tempelkan kartu ID / RFID Anda!');
+			$this->session->set_flashdata('error', __t('msg_tap_card_prompt', 'Please tap your ID card on the reader!'));
 			redirect('auth/login');
 			return;
 		}
@@ -115,8 +115,8 @@ class Auth extends CI_Controller {
 			$this->session->set_userdata($session_data);
 
 			$redirect_url = ($user->role === 'voter') ? base_url('vote') : base_url('dashboard');
-			$role_label   = ($user->role === 'admin') ? 'Administrator' : 'Pemilih (DPT)';
-			$success_msg  = 'Kartu ID Terverifikasi! Selamat datang, ' . $user->name . ' (' . $role_label . ').';
+			$role_label   = ($user->role === 'admin') ? __t('admin', 'Administrator') : __t('voter', 'Voter (DPT)');
+			$success_msg  = sprintf(__t('msg_card_verified_welcome', 'Card ID Verified! Welcome, %s (%s).'), $user->name, $role_label);
 
 			if ($this->input->is_ajax_request()) {
 				echo json_encode(array(
@@ -132,7 +132,7 @@ class Auth extends CI_Controller {
 			$this->session->set_flashdata('success', $success_msg);
 			redirect(($user->role === 'voter') ? 'vote' : 'dashboard');
 		} else {
-			$error_msg = 'Kartu ID (' . htmlspecialchars($card_uid) . ') tidak terdaftar di sistem E-Voting!';
+			$error_msg = sprintf(__t('msg_card_unregistered', 'Card ID (%s) is not registered in the E-Voting system!'), htmlspecialchars($card_uid));
 			if ($this->input->is_ajax_request()) {
 				echo json_encode(array(
 					'status'  => 'error',
